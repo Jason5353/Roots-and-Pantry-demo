@@ -92,6 +92,11 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// Shrink the header once the page is scrolled a little.
+const hdr = document.querySelector('header.site');
+const onScroll = () => hdr?.classList.toggle('shrunk', window.scrollY > 40);
+window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
 document.addEventListener('demo:change', applyAll);
 applyAll();
 // Re-apply avatars when a page draws new ones (list, favourites, family).

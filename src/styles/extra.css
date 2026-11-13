@@ -5,8 +5,19 @@
 .banner { background: var(--ink); color: #fff; text-align: center; font-size: 14px; padding: 7px 12px; line-height: 1.4 }
 .banner b { color: var(--yolk) }
 
-/* header */
+/* header: same fonts as the family site, a little bigger, with a soft drop shadow; shrinks on scroll */
+header.site .wrap { height: 84px; transition: height .25s ease }
+.logo { font-size: 30px; text-shadow: 1px 2px 3px rgba(30, 42, 74, .28); transition: font-size .25s ease }
 .logo b { font: inherit; display: inline }
+.logo span { font-size: 28px; font-weight: 700; -webkit-text-stroke: .5px currentColor; text-shadow: 1px 2px 3px rgba(180, 34, 15, .3); transition: font-size .25s ease, transform .25s ease }
+header.site { transition: box-shadow .25s ease }
+header.site.shrunk { box-shadow: 0 4px 16px rgba(30, 42, 74, .08) }
+header.site.shrunk .wrap { height: 60px }
+header.site.shrunk .logo { font-size: 23px }
+header.site.shrunk .logo span { font-size: 21px; transform: rotate(-3deg) translate(6px, 0) }
+header.site .who, header.site .btn-red, nav.main a { transition: padding .25s ease, font-size .25s ease }
+header.site.shrunk .who .av { width: 30px; height: 30px }
+header.site.shrunk .btn-red { padding: 10px 18px }
 nav.main a.on { color: var(--pepper) }
 .count { display: inline-grid; place-items: center; min-width: 22px; height: 22px; border-radius: 999px; background: var(--pepper); color: #fff; font-size: 12px; font-weight: 800; margin-left: 4px; padding: 0 6px; vertical-align: 1px }
 .count:empty, .count[data-n="0"] { display: none }
@@ -167,6 +178,10 @@ body:not([data-role="admin"]) .admin-only { opacity: .45; pointer-events: none }
   .deals { grid-template-columns: 1fr }
   .coverpick { grid-template-columns: 1fr 1fr }
   .who { padding-right: 3px } .who .nm { display: none }
+  header.site .wrap { height: 70px }
+  .logo { font-size: 24px } .logo span { font-size: 22px }
+  header.site.shrunk .wrap { height: 54px }
+  header.site.shrunk .logo { font-size: 19px } header.site.shrunk .logo span { font-size: 18px }
   header.site .btn-red .long { display: none }
   .grid.featured .cardwrap:first-child { grid-column: auto }
   .grid.featured .cardwrap:first-child h3 { font-size: 24px }
