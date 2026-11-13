@@ -9,12 +9,12 @@
 header.site .wrap { height: 84px; transition: height .25s ease }
 .logo { font-size: 30px; transition: font-size .25s ease }
 .logo b { font: inherit; display: inline }
-.logo span { font-size: 42px; font-weight: 700; -webkit-text-stroke: .6px currentColor; margin-top: -15px; transform: rotate(-3deg) translate(14px, 0); transition: font-size .25s ease, transform .25s ease, margin .25s ease }
+.logo span { font-size: 40px; font-weight: 700; -webkit-text-stroke: .6px currentColor; margin-top: -10px; transform: rotate(-3deg) translate(14px, 0); transition: font-size .25s ease, transform .25s ease, margin .25s ease }
 header.site { transition: box-shadow .25s ease }
 header.site.shrunk { box-shadow: 0 4px 16px rgba(30, 42, 74, .08) }
 header.site.shrunk .wrap { height: 60px }
 header.site.shrunk .logo { font-size: 23px }
-header.site.shrunk .logo span { font-size: 32px; margin-top: -12px; transform: rotate(-3deg) translate(11px, 0) }
+header.site.shrunk .logo span { font-size: 30px; margin-top: -8px; transform: rotate(-3deg) translate(11px, 0) }
 header.site .who, header.site .btn-red, nav.main a { transition: padding .25s ease, font-size .25s ease }
 header.site.shrunk .who .av { width: 30px; height: 30px }
 header.site.shrunk .btn-red { padding: 10px 18px }
@@ -179,9 +179,9 @@ body:not([data-role="admin"]) .admin-only { opacity: .45; pointer-events: none }
   .coverpick { grid-template-columns: 1fr 1fr }
   .who { padding-right: 3px } .who .nm { display: none }
   header.site .wrap { height: 70px }
-  .logo { font-size: 24px } .logo span { font-size: 33px; margin-top: -12px }
+  .logo { font-size: 24px } .logo span { font-size: 30px; margin-top: -8px }
   header.site.shrunk .wrap { height: 54px }
-  header.site.shrunk .logo { font-size: 19px } header.site.shrunk .logo span { font-size: 26px; margin-top: -10px }
+  header.site.shrunk .logo { font-size: 19px } header.site.shrunk .logo span { font-size: 24px; margin-top: -6px }
   header.site .btn-red .long { display: none }
   .grid.featured .cardwrap:first-child { grid-column: auto }
   .grid.featured .cardwrap:first-child h3 { font-size: 24px }
