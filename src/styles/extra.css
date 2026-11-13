@@ -154,10 +154,29 @@ dialog.pop .actions { display: flex; gap: 10px; justify-content: flex-end; flex-
 .toast.show { opacity: 1 }
 .childnote { display: none; background: #DCE8FB; color: #1F4E9A; border-radius: 16px; padding: 12px 16px; margin: 0 0 18px; font-size: 16px }
 
+/* Sponsored spotlight (adults only) */
+.spotlights { margin: 0 0 8px }
+.spotlight { display: grid; grid-template-columns: auto auto 1fr auto; gap: 14px 18px; align-items: center; border: 2px solid var(--ink); border-radius: 20px; padding: 16px 18px; background: var(--yolk-soft); box-shadow: 5px 5px 0 var(--yolk); position: relative }
+.spotlight .sponsored { font: 800 12px/1 var(--display); letter-spacing: .06em; text-transform: uppercase; background: var(--ink); color: #fff; border-radius: 999px; padding: 6px 10px; align-self: start }
+.spotlight .logo2 { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; font-size: 28px; border: 2px solid var(--ink) }
+.spotlight .sp-text b { font-size: 19px }
+.spotlight .where { font-size: 14px; color: var(--ink-soft) }
+.spotlight p { margin: 4px 0 0; font-size: 16px; color: var(--ink-soft); max-width: 60ch }
+.spotlight .offer { font: 700 28px/1 var(--hand); color: var(--pepper); display: block; margin-bottom: 8px }
+.spotlight .codebox { display: flex; gap: 8px; align-items: center; flex-wrap: wrap }
+@media (max-width: 980px) { .spotlight { grid-template-columns: auto 1fr } .spotlight .sponsored { grid-column: 1 / -1 } .spotlight .sp-offer { grid-column: 1 / -1 } }
+.spot-section { padding: 28px 0 0 }
+.rules li { margin-bottom: 8px }
+.pricing td, .pricing th { text-align: left; padding: 10px 12px; border-top: 1px solid var(--line); vertical-align: top }
+.pricing { border-collapse: collapse; width: 100%; font-size: 16px }
+.pricing th { font-weight: 700; background: var(--yolk-soft) }
+
 /* under-13 accounts: no deals, no adverts; grown-ups do deleting and inviting */
 body[data-age="child"] .deal-only { display: none !important }
 body[data-age="child"] .childnote { display: block }
 body[data-age="child"] .adult-only { display: none !important }
+/* sponsored spotlights: adults only (no adverts to anyone under 18) */
+body[data-age="child"] .ad-only, body[data-age="teen"] .ad-only { display: none !important }
 body:not([data-role="admin"]) .admin-only { opacity: .45; pointer-events: none }
 
 /* bottom tab bar on phones (the main nav is hidden below 980px) */

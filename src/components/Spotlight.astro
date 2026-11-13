@@ -1,0 +1,25 @@
+---
+// Paid "Sponsored" spotlight: one clearly labelled slot, rotating between the producers who have
+// booked it for this county. Shown to adult accounts only (never to under-18s).
+// Deal tags on ingredients are NOT affected by sponsorship: they only ever follow the ingredients.
+import { producersFor } from '../data/producers.js';
+interface Props { county?: string; example?: boolean }
+const { county = 'Shropshire', example = false } = Astro.props;
+const booked = producersFor(county).filter((p) => p.spotlight);
+---
+<div class={`spotlights ${example ? '' : 'ad-only deal-only'}`} data-spotlights>
+  {booked.map((p, i) => (
+    <aside class="spotlight" data-spot={p.id} hidden={i > 0} aria-label={`Sponsored: ${p.name}`}>
+      <span class="sponsored">Sponsored</span>
+      <span class="logo2" style={`background:${p.colour}`}>{p.icon}</span>
+      <div class="sp-text">
+        <b>{p.name}</b> <span class="where">· {p.where}</span>
+        <p>{p.spotlight}</p>
+      </div>
+      <div class="sp-offer">
+        <span class="offer">{p.offer}</span>
+        <div class="codebox"><span class="code">{p.code}</span><button type="button" class="btn btn-green sm" data-shop={p.id}>Shop now ↗</button></div>
+      </div>
+    </aside>
+  ))}
+</div>

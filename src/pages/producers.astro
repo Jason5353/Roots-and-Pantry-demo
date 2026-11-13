@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Snap from '../components/Snap.astro';
+import Spotlight from '../components/Spotlight.astro';
 import { snapshot } from '../lib';
 import { producers } from '../data/producers.js';
 ---
@@ -32,11 +33,33 @@ import { producers } from '../data/producers.js';
           <li><b>Independent producers only.</b> No supermarkets or big brands.</li>
           <li><b>Local first.</b> Offers are shown by county.</li>
           <li><b>No family data shared.</b> You see totals, never who the families are.</li>
-          <li><b>No adverts to children.</b> Offers are switched off for under-13 accounts, and sponsored spots are always labelled.</li></ul></div>
-        <div class="panel"><h2>Pilot pricing (draft)</h2><ul>
-          <li><b>Founding producers:</b> free listing during the pilot.</li>
-          <li><b>Later:</b> a small monthly listing fee, an optional labelled “Sponsored” spotlight, or a small commission on orders that use your code.</li></ul>
-          <p style="color:var(--ink-soft);font-size:15px;margin:12px 0 0">Nothing is charged in this demo.</p></div>
+          <li><b>No adverts to children.</b> Sponsored spotlights are adults only, and under-13 accounts see no deals at all.</li></ul></div>
+        <div class="panel"><h2>Pilot pricing (draft)</h2>
+          <table class="pricing">
+            <tr><th>Option</th><th>What you get</th></tr>
+            <tr><td><b>Founding producer</b><br />free during the pilot</td><td>Your code on matching ingredients and shopping lists, your card on the Local deals page, and the monthly dashboard.</td></tr>
+            <tr><td><b>Local listing</b><br />small monthly fee, after the pilot</td><td>Everything above, once the pilot ends.</td></tr>
+            <tr><td><b>Sponsored spotlight</b><br />optional, booked by the month</td><td>A clearly labelled panel at the top of families' home pages in your county. See below.</td></tr>
+            <tr><td><b>Or: commission</b><br />instead of a fee</td><td>A small percentage of orders that use your code, from your own shop's records.</td></tr>
+          </table>
+          <p style="color:var(--ink-soft);font-size:15px;margin:12px 0 0">Prices will be agreed with founding producers. Nothing is charged in this demo.</p></div>
+      </div>
+
+      <h2 class="sec" id="spotlight">How the Sponsored spotlight works</h2>
+      <p class="sub" style="max-width:70ch">Your normal listing puts your code next to ingredients a family already needs. The spotlight is extra: it puts you in front of every family in your county when they open the app, even before they've picked a recipe. It's ideal for launches and seasonal stock like Christmas gammons, new-season honey or summer strawberries.</p>
+      <Spotlight county="Shropshire" example />
+      <p style="font-size:14px;color:var(--ink-soft);margin:6px 0 24px">Example spotlight. On families' home pages it sits just above "Just added".</p>
+      <div class="two">
+        <div class="panel"><h2>What you get</h2><ul class="rules">
+          <li><b>Top-of-home-page panel</b> with your name, a short message, your offer, your code and a Shop now link to your own shop.</li>
+          <li><b>Booked by the month, per county.</b> A few spotlight places per county, shared in rotation, so each one gets seen.</li>
+          <li><b>Your words, our check.</b> You send the message and offer; we check it's accurate and clearly labelled before it goes live.</li>
+          <li><b>Results on your dashboard:</b> how often it was shown, taps through to your shop, and codes copied.</li></ul></div>
+        <div class="panel"><h2>The rules we keep</h2><ul class="rules">
+          <li><b>Always labelled “Sponsored”</b>, so families know it's an advert.</li>
+          <li><b>Adults only.</b> Spotlights are never shown to anyone under 18, and child accounts see no deals at all.</li>
+          <li><b>Never pay-to-rank.</b> Sponsoring doesn't change the green deal tags. Those only ever follow what's in the recipe or the list.</li>
+          <li><b>Independent producers only</b>, no supermarkets or big brands, and no family data shared. You see totals, never who the families are.</li></ul></div>
       </div>
       <h2 class="sec" id="dash">Demo producer dashboard</h2>
       <div class="panel">

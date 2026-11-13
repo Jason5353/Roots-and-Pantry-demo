@@ -92,6 +92,15 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// Sponsored spotlight: show one booked producer per visit (rotation), and count it as shown.
+document.querySelectorAll<HTMLElement>('[data-spotlights]').forEach((box) => {
+  const spots = [...box.querySelectorAll<HTMLElement>('[data-spot]')];
+  if (!spots.length) return;
+  const pick = Math.floor(Math.random() * spots.length);
+  spots.forEach((s, i) => (s.hidden = i !== pick));
+  if (box.classList.contains('ad-only') && getComputedStyle(box).display !== 'none') tap(spots[pick].dataset.spot!, 0);
+});
+
 // Shrink the header once the page is scrolled a little.
 const hdr = document.querySelector('header.site');
 const onScroll = () => hdr?.classList.toggle('shrunk', window.scrollY > 40);
