@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Snap from '../components/Snap.astro';
-import Spotlight from '../components/Spotlight.astro';
 import { snapshot } from '../lib';
 import { producers } from '../data/producers.js';
 ---
@@ -33,34 +32,30 @@ import { producers } from '../data/producers.js';
           <li><b>Independent producers only.</b> No supermarkets or big brands.</li>
           <li><b>Local first.</b> Offers are shown by county.</li>
           <li><b>No family data shared.</b> You see totals, never who the families are.</li>
-          <li><b>No adverts to children.</b> Sponsored spotlights are adults only, and under-13 accounts see no deals at all.</li></ul></div>
-        <div class="panel"><h2>Pilot pricing (draft)</h2>
+          <li><b>No adverts.</b> No paid placements and no pay-to-rank. Deals only appear next to the ingredients they match, and under-13 accounts see no deals at all.</li></ul></div>
+        <div class="panel"><h2>Free to list</h2>
           <table class="pricing">
-            <tr><th>Option</th><th>What you get</th></tr>
-            <tr><td><b>Founding producer</b><br />free during the pilot</td><td>Your code on matching ingredients and shopping lists, your card on the Local deals page, and the monthly dashboard.</td></tr>
-            <tr><td><b>Local listing</b><br />small monthly fee, after the pilot</td><td>Everything above, once the pilot ends.</td></tr>
-            <tr><td><b>Sponsored spotlight</b><br />optional, booked by the month</td><td>A clearly labelled panel at the top of families' home pages in your county. See below.</td></tr>
-            <tr><td><b>Or: commission</b><br />instead of a fee</td><td>A small percentage of orders that use your code, from your own shop's records.</td></tr>
+            <tr><th>Local producer listing</th><th>Free</th></tr>
+            <tr><td colspan="2">Your code on matching ingredients and shopping lists, your card on the Local deals page, and the monthly dashboard.</td></tr>
           </table>
-          <p style="color:var(--ink-soft);font-size:15px;margin:12px 0 0">Prices will be agreed with founding producers. Nothing is charged in this demo.</p></div>
+          <p style="color:var(--ink-soft);font-size:15px;margin:12px 0 0">Free for families and for producers while we prove the idea. No contract, no subscription, no commission.</p></div>
       </div>
 
-      <h2 class="sec" id="spotlight">How the Sponsored spotlight works</h2>
-      <p class="sub" style="max-width:70ch">Your normal listing puts your code next to ingredients a family already needs. The spotlight is extra: it puts you in front of every family in your county when they open the app, even before they've picked a recipe. It's ideal for launches and seasonal stock like Christmas gammons, new-season honey or summer strawberries.</p>
-      <Spotlight county="Shropshire" example />
-      <p style="font-size:14px;color:var(--ink-soft);margin:6px 0 24px">Example spotlight. On families' home pages it sits just above "Just added".</p>
-      <div class="two">
-        <div class="panel"><h2>What you get</h2><ul class="rules">
-          <li><b>Top-of-home-page panel</b> with your name, a short message, your offer, your code and a Shop now link to your own shop.</li>
-          <li><b>Booked by the month, per county.</b> A few spotlight places per county, shared in rotation, so each one gets seen.</li>
-          <li><b>Your words, our check.</b> You send the message and offer; we check it's accurate and clearly labelled before it goes live.</li>
-          <li><b>Results on your dashboard:</b> how often it was shown, taps through to your shop, and codes copied.</li></ul></div>
-        <div class="panel"><h2>The rules we keep</h2><ul class="rules">
-          <li><b>Always labelled “Sponsored”</b>, so families know it's an advert.</li>
-          <li><b>Adults only.</b> Spotlights are never shown to anyone under 18, and child accounts see no deals at all.</li>
-          <li><b>Never pay-to-rank.</b> Sponsoring doesn't change the green deal tags. Those only ever follow what's in the recipe or the list.</li>
-          <li><b>Independent producers only</b>, no supermarkets or big brands, and no family data shared. You see totals, never who the families are.</li></ul></div>
+      <div class="panel tip" id="tip">
+        <div class="tip-text">
+          <h2>Pay it forward: a £5 thank-you</h2>
+          <p>Roots &amp; Pantry is run on goodwill for now. If it sends customers your way and you feel it's earned it, you can leave a one-off <b>£5 thank-you</b>. That's it.</p>
+          <ul class="rules">
+            <li><b>Entirely voluntary.</b> Your listing stays exactly the same whether you tip or not.</li>
+            <li><b>No invoices, no reminders.</b> Tip whenever you think it's deserved, as often or as rarely as you like.</li>
+            <li><b>It keeps the lights on</b>: hosting, and time spent signing up more local families.</li>
+          </ul>
+          <p><a class="btn btn-red" href="https://checkout.revolut.com/pay/c51d5484-e8aa-4fce-b923-56b73550cc74" target="_blank" rel="noopener noreferrer">Leave a £5 thank-you ↗</a></p>
+          <p style="font-size:14px;color:var(--ink-soft);margin:0">Secure payment by card, Apple Pay or Google Pay through Revolut.</p>
+        </div>
+        <figure class="tip-qr"><img src="/tip-qr.png" alt="QR code to leave a £5 thank-you via Revolut" width="353" height="473" loading="lazy" /><figcaption>Or scan with your phone</figcaption></figure>
       </div>
+
       <h2 class="sec" id="dash">Demo producer dashboard</h2>
       <div class="panel">
         <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
@@ -78,7 +73,7 @@ import { producers } from '../data/producers.js';
       </div>
       <div class="panel producer-cta">
         <div style="font-size:44px">🤝</div>
-        <div style="flex:1;min-width:240px"><h2 style="margin:0 0 4px">Interested in the pilot?</h2><p style="margin:0;color:var(--ink-soft)">We're looking for founding producers in Shropshire. Contact details will be added here.</p></div>
+        <div style="flex:1;min-width:240px"><h2 style="margin:0 0 4px">Interested in the pilot?</h2><p style="margin:0;color:var(--ink-soft)">We're looking for local producers in Shropshire to try it out, free. Contact details will be added here.</p></div>
       </div>
     </section>
   </main>
