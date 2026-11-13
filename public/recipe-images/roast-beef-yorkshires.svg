@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6D7B0"/><stop offset="1" stop-color="#E39A63"/></linearGradient></defs>
-<rect width="1200" height="900" fill="url(#g)"/>
-<circle cx="984" cy="180" r="270" fill="#fff" opacity=".18"/>
-<circle cx="180" cy="792" r="324" fill="#fff" opacity=".12"/>
-<text x="600" y="522" font-size="342" text-anchor="middle">🥩</text>
-<text x="600" y="828" font-family="Arial,sans-serif" font-size="36" fill="#fff" opacity=".85" text-anchor="middle">Photo coming soon</text>
-</svg>

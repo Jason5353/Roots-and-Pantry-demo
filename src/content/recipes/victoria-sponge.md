@@ -1,7 +1,7 @@
 ---
 title: "Classic Victoria Sponge"
 description: "Birthday cake default. Jam and cream, no arguments."
-image: "/recipe-images/victoria-sponge.svg"
+image: "/recipe-images/victoria-sponge.webp"
 source:
   name: "A recipe website (demo)"
 addedBy: "Nana Mags"

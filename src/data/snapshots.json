@@ -1,18 +1,184 @@
 [
-  { "file": "/photos/bbq-dave-sam.svg", "caption": "BBQ season", "alt": "Dave and Sam at the barbecue", "w": 1200, "h": 900 },
-  { "file": "/photos/jam-tarts-nana-lily.svg", "caption": "Jam tarts with Nana", "alt": "Nana Mags and Lily making jam tarts", "w": 1200, "h": 900 },
-  { "file": "/photos/lilys-birthday.svg", "caption": "Lily's 8th!", "alt": "Lily blowing out her birthday candles", "w": 960, "h": 1200 },
-  { "file": "/photos/sunday-roast.svg", "caption": "Sunday roast", "alt": "The family round the table for Sunday roast", "w": 1200, "h": 900 },
-  { "file": "/photos/priya-curry-night.svg", "caption": "Curry night", "alt": "Priya stirring a pot of curry", "w": 1200, "h": 900 },
-  { "file": "/photos/sams-midnight-toastie.svg", "caption": "Midnight toastie", "alt": "Sam making a late-night toastie", "w": 1200, "h": 900 },
-  { "file": "/photos/pancake-day.svg", "caption": "Pancake Day flip", "alt": "Dave flipping a pancake while Lily laughs", "w": 960, "h": 1200 },
-  { "file": "/photos/christmas-eve-ham.svg", "caption": "Christmas Eve", "alt": "Glazing the Christmas ham", "w": 1200, "h": 900 },
-  { "file": "/photos/gingerbread-day.svg", "caption": "Gingerbread day", "alt": "Sam and Lily icing gingerbread people", "w": 1200, "h": 900 },
-  { "file": "/photos/nana-at-the-hob.svg", "caption": "Nana at the hob", "alt": "Nana Mags stirring custard", "w": 960, "h": 1200 },
-  { "file": "/photos/pizza-night.svg", "caption": "Pizza night", "alt": "Priya and Lily topping pizzas", "w": 1200, "h": 900 },
-  { "file": "/photos/hillside-picnic.svg", "caption": "Picnic on the hill", "alt": "Family picnic on a hillside", "w": 1200, "h": 900 },
-  { "file": "/photos/farmers-market.svg", "caption": "Market morning", "alt": "Priya and Nana at a cheese stall", "w": 1200, "h": 900 },
-  { "file": "/photos/washing-up.svg", "caption": "Washing-up crew", "alt": "Dave and Sam doing the washing up", "w": 1200, "h": 900 },
-  { "file": "/photos/scones-out-the-oven.svg", "caption": "Scones are ready", "alt": "Cheese scones coming out of the oven", "w": 1200, "h": 900 },
-  { "file": "/photos/marshmallow-campfire.svg", "caption": "Marshmallow night", "alt": "Toasting marshmallows round the fire pit", "w": 1200, "h": 900 }
+  {
+    "file": "/photos/bbq-dave-sam.webp",
+    "caption": "BBQ season",
+    "alt": "Dave and Sam at the barbecue",
+    "w": 1194,
+    "h": 896
+  },
+  {
+    "file": "/photos/jam-tarts-nana-lily.webp",
+    "caption": "Jam tarts with Nana",
+    "alt": "Nana Mags and Lily making jam tarts",
+    "w": 1194,
+    "h": 896
+  },
+  {
+    "file": "/photos/lilys-birthday.svg",
+    "caption": "Lily's 8th!",
+    "alt": "Lily blowing out her birthday candles",
+    "w": 960,
+    "h": 1200
+  },
+  {
+    "file": "/photos/sunday-roast.svg",
+    "caption": "Sunday roast",
+    "alt": "The family round the table for Sunday roast",
+    "w": 1200,
+    "h": 900
+  },
+  {
+    "file": "/photos/priya-curry-night.webp",
+    "caption": "Curry night",
+    "alt": "Priya stirring a pot of curry",
+    "w": 1152,
+    "h": 864
+  },
+  {
+    "file": "/photos/priya-curry-night-2.webp",
+    "caption": "Spice drawer raid",
+    "alt": "Priya cooking curry at the hob with bowls of spices",
+    "w": 1152,
+    "h": 864
+  },
+  {
+    "file": "/photos/sams-midnight-toastie.svg",
+    "caption": "Midnight toastie",
+    "alt": "Sam making a late-night toastie",
+    "w": 1200,
+    "h": 900
+  },
+  {
+    "file": "/photos/pancake-day.svg",
+    "caption": "Pancake Day flip",
+    "alt": "Dave flipping a pancake while Lily laughs",
+    "w": 960,
+    "h": 1200
+  },
+  {
+    "file": "/photos/christmas-eve-ham.svg",
+    "caption": "Christmas Eve",
+    "alt": "Glazing the Christmas ham",
+    "w": 1200,
+    "h": 900
+  },
+  {
+    "file": "/photos/gingerbread-day.svg",
+    "caption": "Gingerbread day",
+    "alt": "Sam and Lily icing gingerbread people",
+    "w": 1200,
+    "h": 900
+  },
+  {
+    "file": "/photos/nana-at-the-hob.svg",
+    "caption": "Nana at the hob",
+    "alt": "Nana Mags stirring custard",
+    "w": 960,
+    "h": 1200
+  },
+  {
+    "file": "/photos/pizza-night.svg",
+    "caption": "Pizza night",
+    "alt": "Priya and Lily topping pizzas",
+    "w": 1200,
+    "h": 900
+  },
+  {
+    "file": "/photos/hillside-picnic.svg",
+    "caption": "Picnic on the hill",
+    "alt": "Family picnic on a hillside",
+    "w": 1200,
+    "h": 900
+  },
+  {
+    "file": "/photos/farmers-market.webp",
+    "caption": "Market morning",
+    "alt": "Priya and Nana at a cheese stall",
+    "w": 960,
+    "h": 1200
+  },
+  {
+    "file": "/photos/washing-up.svg",
+    "caption": "Washing-up crew",
+    "alt": "Dave and Sam doing the washing up",
+    "w": 1200,
+    "h": 900
+  },
+  {
+    "file": "/photos/scones-out-the-oven.svg",
+    "caption": "Scones are ready",
+    "alt": "Cheese scones coming out of the oven",
+    "w": 1200,
+    "h": 900
+  },
+  {
+    "file": "/photos/marshmallow-campfire.svg",
+    "caption": "Marshmallow night",
+    "alt": "Toasting marshmallows round the fire pit",
+    "w": 1200,
+    "h": 900
+  },
+  {
+    "file": "/recipe-images/roast-beef-yorkshires.webp",
+    "caption": "Sunday's roast",
+    "alt": "Roast beef with Yorkshire puddings",
+    "w": 1600,
+    "h": 1200
+  },
+  {
+    "file": "/recipe-images/honey-mustard-sausage-traybake.webp",
+    "caption": "Saturday traybake",
+    "alt": "Honey and mustard sausage traybake",
+    "w": 1600,
+    "h": 1200
+  },
+  {
+    "file": "/recipe-images/christmas-cheese-scones.webp",
+    "caption": "Christmas scones",
+    "alt": "Cheese scones on a cooling rack",
+    "w": 1600,
+    "h": 1200
+  },
+  {
+    "file": "/recipe-images/lilys-jam-tarts.webp",
+    "caption": "Lily's jam tarts",
+    "alt": "Homemade jam tarts in a bun tin",
+    "w": 1600,
+    "h": 1200
+  },
+  {
+    "file": "/recipe-images/sams-midnight-cheese-toastie.webp",
+    "caption": "Elite toastie",
+    "alt": "A cheese and chutney toastie",
+    "w": 1600,
+    "h": 1200
+  },
+  {
+    "file": "/recipe-images/bread-butter-pudding.webp",
+    "caption": "Nana's pudding",
+    "alt": "Bread and butter pudding",
+    "w": 1600,
+    "h": 1200
+  },
+  {
+    "file": "/recipe-images/leek-potato-soup.webp",
+    "caption": "Soup after a wet walk",
+    "alt": "Leek and potato soup with crusty bread",
+    "w": 1600,
+    "h": 1200
+  },
+  {
+    "file": "/recipe-images/honey-glazed-christmas-ham.webp",
+    "caption": "The Christmas ham",
+    "alt": "Honey-glazed Christmas ham",
+    "w": 1600,
+    "h": 1200
+  },
+  {
+    "file": "/recipe-images/victoria-sponge.webp",
+    "caption": "Birthday sponge",
+    "alt": "Victoria sponge with jam and cream",
+    "w": 1600,
+    "h": 1200
+  }
 ]

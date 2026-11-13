@@ -13,10 +13,10 @@ import { family, snapshot, pickSnapshots } from '../lib';
 const recipes = (await getCollection('recipes')).sort((a, b) => +b.data.addedOn - +a.data.addedOn);
 const latest = recipes.slice(0, 5);
 const hero = [
-  snapshot('sunday-roast'),
-  snapshot('pancake-day'),
   snapshot('jam-tarts-nana-lily'),
-  snapshot('christmas-eve-ham'),
+  snapshot('farmers-market'),
+  snapshot('bbq-dave-sam'),
+  snapshot('priya-curry-night'),
 ];
 // Local deals section: the producers whose products turn up most in the family's recipes.
 const local = producersFor(family.county)

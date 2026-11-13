@@ -1,7 +1,7 @@
 ---
 title: "Lily's Jam Tarts"
 description: "Lily typed this one in herself."
-image: "/recipe-images/lilys-jam-tarts.svg"
+image: "/recipe-images/lilys-jam-tarts.webp"
 source:
   name: "Hartley family recipe"
 addedBy: "Lily"

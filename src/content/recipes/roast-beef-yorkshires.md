@@ -1,7 +1,7 @@
 ---
 title: "Nana's Roast Beef & Yorkshires"
 description: "The one we have every Sunday. The Yorkshires must go into screaming hot fat."
-image: "/recipe-images/roast-beef-yorkshires.svg"
+image: "/recipe-images/roast-beef-yorkshires.webp"
 source:
   name: "Nana's handwritten recipe card"
 addedBy: "Nana Mags"

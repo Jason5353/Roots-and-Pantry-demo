@@ -1,7 +1,7 @@
 ---
 title: "Nana's Bread & Butter Pudding"
 description: "The secret is a spoon of marmalade on every slice."
-image: "/recipe-images/bread-butter-pudding.svg"
+image: "/recipe-images/bread-butter-pudding.webp"
 source:
   name: "Nana's handwritten recipe card"
 addedBy: "Nana Mags"

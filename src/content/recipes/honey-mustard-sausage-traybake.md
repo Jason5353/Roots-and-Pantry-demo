@@ -1,7 +1,7 @@
 ---
 title: "Honey & Mustard Sausage Traybake"
 description: "Saturday tea when nobody can be bothered. One tray, no arguments."
-image: "/recipe-images/honey-mustard-sausage-traybake.svg"
+image: "/recipe-images/honey-mustard-sausage-traybake.webp"
 source:
   name: "Hartley family recipe"
 addedBy: "Dave"

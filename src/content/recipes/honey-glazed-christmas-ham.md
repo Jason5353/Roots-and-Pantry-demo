@@ -1,7 +1,7 @@
 ---
 title: "Honey-Glazed Christmas Ham"
 description: "Christmas Eve centrepiece. Leftovers make the best sandwiches."
-image: "/recipe-images/honey-glazed-christmas-ham.svg"
+image: "/recipe-images/honey-glazed-christmas-ham.webp"
 source:
   name: "A recipe website (demo)"
 addedBy: "Dave"

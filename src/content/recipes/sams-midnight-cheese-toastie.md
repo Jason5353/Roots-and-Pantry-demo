@@ -1,7 +1,7 @@
 ---
 title: "Sam's Midnight Cheese Toastie"
 description: "Elite toastie. Chutney is not optional."
-image: "/recipe-images/sams-midnight-cheese-toastie.svg"
+image: "/recipe-images/sams-midnight-cheese-toastie.webp"
 source:
   name: "Hartley family recipe"
 addedBy: "Sam"

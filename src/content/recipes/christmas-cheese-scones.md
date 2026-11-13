@@ -1,7 +1,7 @@
 ---
 title: "Christmas Cheese Scones"
 description: "Made every Christmas Eve for the cheeseboard. Serve warm with chutney."
-image: "/recipe-images/christmas-cheese-scones.svg"
+image: "/recipe-images/christmas-cheese-scones.webp"
 source:
   name: "Hartley family recipe"
 addedBy: "Priya"

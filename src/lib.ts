@@ -16,10 +16,14 @@ function hash(s: string) {
   for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
   return h >>> 0;
 }
-export const pool = snapshots;
+// Real photos only, once there are enough of them; the SVG placeholders fill in until then.
+const real = snapshots.filter((s) => !s.file.endsWith('.svg'));
+export const pool = real.length >= 8 ? real : snapshots;
 export function pickSnapshots(seed: string, n: number): Snapshot[] {
   const start = hash(seed) % pool.length;
-  const step = 7;
+  // Step must share no factor with the pool size, or the picks loop round a few photos.
+  const gcd = (a: number, b: number): number => (b ? gcd(b, a % b) : a);
+  const step = [7, 5, 3, 11, 13, 1].find((k) => gcd(k, pool.length) === 1)!;
   const out: Snapshot[] = [];
   for (let i = 0; out.length < Math.min(n, pool.length) && i < pool.length * 2; i++) {
     const s = pool[(start + i * step) % pool.length];

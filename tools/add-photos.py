@@ -20,10 +20,11 @@ snaps = json.loads((ROOT / 'src/data/snapshots.json').read_text())
 snap_names = {s['file'].split('/')[-1].rsplit('.', 1)[0] for s in snaps}
 food_names = {p.stem for p in (ROOT / 'src/content/recipes').glob('*.md')}
 
-def crop(img, ratio):
+def crop(img, ratio, top=0.5):
+    """Crop to ratio. `top` = where to cut vertically (0 = keep the top, 0.5 = centre)."""
     w, h = img.size
     if w / h > ratio: nw = int(h * ratio); return img.crop(((w - nw) // 2, 0, (w - nw) // 2 + nw, h))
-    nh = int(w / ratio); return img.crop((0, (h - nh) // 2, w, (h - nh) // 2 + nh))
+    nh = int(w / ratio); y = int((h - nh) * top); return img.crop((0, y, w, y + nh))
 
 done = []
 for f in files:
@@ -39,7 +40,7 @@ for f in files:
         md = ROOT / f'src/content/recipes/{name}.md'; md.write_text(md.read_text().replace(f'/recipe-images/{name}.svg', f'/recipe-images/{name}.webp'))
     elif name in snap_names:
         s = next(x for x in snaps if f'/{name}.' in x['file'])
-        ratio = s['w'] / s['h']; img = crop(img, ratio)
+        ratio = s['w'] / s['h']; img = crop(img, ratio, top=0.3)  # people: keep heads in
         k = min(1, 1200 / max(img.size)); img = img.resize((round(img.width * k), round(img.height * k)), Image.LANCZOS)
         out = ROOT / f'public/photos/{name}.webp'; img.save(out, 'WEBP', quality=80)
         s['file'] = f'/photos/{name}.webp'; s['w'], s['h'] = img.size

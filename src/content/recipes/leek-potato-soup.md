@@ -1,7 +1,7 @@
 ---
 title: "Leek & Potato Soup"
 description: "Our go-to after a wet walk."
-image: "/recipe-images/leek-potato-soup.svg"
+image: "/recipe-images/leek-potato-soup.webp"
 source:
   name: "Hartley family recipe"
 addedBy: "Priya"
