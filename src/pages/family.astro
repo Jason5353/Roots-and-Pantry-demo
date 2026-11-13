@@ -1,0 +1,154 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Snap from '../components/Snap.astro';
+import { family, pickSnapshots } from '../lib';
+import { counties } from '../data/producers.js';
+const shots = pickSnapshots('family-page', 5);
+const colours = ['#E0301E', '#1F7A4D', '#2F6FDB', '#8A4FBF', '#D9822B', '#1E2A4A'];
+---
+<Layout title="Family" active="family">
+  <main>
+    <div class="wrap pagehead">
+      <h1>Make it yours</h1>
+      <p class="sub">Name your family book, add your photos and set up your people. Only admins can change the family settings. Everyone can change their own photo.</p>
+    </div>
+    <section class="wrap pagebody famgrid">
+      <div style="display:grid;gap:28px">
+        <div class="panel">
+          <h2>Our family book</h2>
+          <p class="adminonly-note" id="adminnote" hidden>You're not an admin, so these are read-only. Nana Mags or Dave can change them.</p>
+          <div class="field admin-only"><label for="fname">Family name</label><input id="fname" value={family.groupName} /></div>
+          <p class="admin-only" style="margin:-8px 0 18px"><button type="button" class="btn btn-red sm" id="savename">Save name</button></p>
+          <span class="label" style="font-weight:700;display:block;margin-bottom:8px">Home page photos</span>
+          <div class="coverpick" id="coverpick">
+            {shots.map((s) => <Snap s={s} />)}
+            <label class="add admin-only">+ Upload<br />family photos<input type="file" accept="image/*" multiple id="coverfile" class="sr-only" /></label>
+          </div>
+          <p style="font-size:14px;color:var(--ink-soft);margin:0 0 16px">Photos are resized and location data is removed. Only your family can see them.</p>
+          <span style="font-weight:700;display:block;margin-bottom:8px">Colour</span>
+          <div class="swatches admin-only">{colours.map((c) => <button type="button" style={`background:${c}`} data-colour={c} aria-label={`Colour ${c}`}></button>)}</div>
+        </div>
+        <div class="panel">
+          <h2>Our categories</h2>
+          <div class="catchips" id="cats"></div>
+          <form class="urlbox admin-only" id="catform"><input id="newcat" style="flex:1;font:500 18px var(--display);border:2px solid var(--ink);border-radius:14px;padding:12px 16px;color:var(--ink)" placeholder="New category, e.g. Thanksgiving" /><button class="btn btn-red" type="submit">Add</button></form>
+        </div>
+        <div class="panel deal-only">
+          <h2>Local deals</h2>
+          <div class="field"><label for="county">Our county</label><select id="county">{counties.map((c) => <option selected={c === family.county}>{c}</option>)}</select></div>
+          <label class="toggle"><input type="checkbox" id="nearby" /> Show deals from neighbouring counties too</label>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Our people</h2>
+        <div id="people"></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+          <button type="button" class="btn btn-red admin-only" id="invitebtn">✉️ Invite someone</button>
+          <button type="button" class="btn btn-ghost adult-only" id="childbtn">🧒 Add a child account</button>
+        </div>
+        <div class="note-child">🧒 Under-13 accounts are created by a parent, need no email, and never see deals or adverts. Children can add and edit recipes but can't delete or invite.</div>
+        <p style="font-size:15px;color:var(--ink-soft);margin-top:16px">One person can belong to several family books (e.g. Nana in both her children's books) and switch between them.</p>
+        <p><button type="button" class="btn btn-ghost sm" data-reset>Reset the demo</button></p>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="pop" id="invitedlg" aria-labelledby="invtitle">
+    <form id="invform">
+      <h2 id="invtitle">Invite someone</h2>
+      <div class="field"><label for="iname">Their name</label><input id="iname" required /></div>
+      <div class="field"><label for="iemail">Their email</label><input id="iemail" type="email" required /></div>
+      <div class="field"><label for="iage">Age</label><select id="iage"><option value="adult">Adult</option><option value="teen">13–17</option></select></div>
+      <p style="font-size:14px">Demo only: no email is sent and the address isn't saved.</p>
+      <div class="actions"><button type="button" class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-red" type="submit">Send invite</button></div>
+    </form>
+  </dialog>
+  <dialog class="pop" id="childdlg" aria-labelledby="chtitle">
+    <form id="childform">
+      <h2 id="chtitle">Add a child account</h2>
+      <p>For children under 13. You give consent as their parent or carer, and you'll look after their account.</p>
+      <div class="field"><label for="cname">Child's first name</label><input id="cname" required /></div>
+      <label style="display:flex;gap:10px;align-items:flex-start;font-weight:600"><input type="checkbox" required style="width:22px;height:22px;flex:none" /> I'm their parent or carer and I give consent</label>
+      <p style="font-size:14px">They'll sign in with a picture login on your family's device. No email needed. Deals and adverts are switched off for them.</p>
+      <div class="actions"><button type="button" class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-red" type="submit">Create account</button></div>
+    </form>
+  </dialog>
+</Layout>
+<script>
+  import { load, update, me, allPeople, avatarHTML, esc, toast, homeCounty } from '../scripts/store';
+  import family from '../data/family.js';
+  const $ = (id: string) => document.getElementById(id)!;
+  const ageLabel = (a: string) => (a === 'child' ? 'Under 13' : a === 'teen' ? '13–17' : 'Adult');
+
+  function resize(file: File, max: number): Promise<string> {
+    return new Promise((res, rej) => {
+      const img = new Image();
+      img.onload = () => {
+        const k = Math.min(1, max / Math.max(img.width, img.height));
+        const c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+        c.getContext('2d')!.drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(img.src); res(c.toDataURL('image/jpeg', 0.82)); // re-drawing strips EXIF/GPS
+      };
+      img.onerror = rej; img.src = URL.createObjectURL(file);
+    });
+  }
+
+  function draw() {
+    const s = load(); const u = me(s);
+    ($('fname') as HTMLInputElement).value = s.familyName ?? family.groupName;
+    $('adminnote').hidden = u.role === 'admin';
+    document.querySelectorAll<HTMLElement>('[data-colour]').forEach((b) => b.setAttribute('aria-pressed', String((s.colour ?? '#E0301E') === b.dataset.colour)));
+    const cats = s.categories ?? family.categories;
+    $('cats').innerHTML = cats.map((c) => `<span class="chip">${esc(c)}${u.role === 'admin' ? ` <button type="button" data-rmcat="${esc(c)}" aria-label="Remove ${esc(c)}">✕</button>` : ''}</span>`).join('');
+    ($('county') as HTMLSelectElement).value = s.county ?? homeCounty;
+    ($('nearby') as HTMLInputElement).checked = !!s.nearby;
+    $('people').innerHTML = allPeople(s).map((p) => {
+      const canPhoto = u.role === 'admin' || p.name === u.name || p.managedBy === u.name;
+      const canRole = u.role === 'admin' && p.name !== u.name && p.age === 'adult' && !p.creator;
+      return `<div class="person">${avatarHTML(p, s)}<div class="nm"><b>${esc(p.name)}</b>${(p as any).pending ? ' <span class="role">Invite sent</span>' : ''}<br>
+        ${p.role === 'admin' ? '<span class="role admin">Admin</span>' : '<span class="role">Member</span>'}<span class="role ${p.age === 'child' ? 'child' : p.age === 'teen' ? 'teen' : ''}">${ageLabel(p.age)}</span>
+        ${p.managedBy ? `<div style="font-size:13px;color:var(--ink-soft)">Picture login · looked after by ${esc(p.managedBy)}</div>` : ''}</div>
+        ${canPhoto ? `<label class="btn btn-ghost sm filebtn">📷 Change photo<input type="file" accept="image/*" data-photo="${esc(p.name)}"></label>` : ''}
+        ${canRole ? `<button type="button" class="btn btn-ghost sm" data-role="${esc(p.name)}">${p.role === 'admin' ? 'Remove admin' : 'Make admin'}</button>` : ''}</div>`;
+    }).join('');
+  }
+
+  $('savename').addEventListener('click', () => { const v = ($('fname') as HTMLInputElement).value.trim(); if (v) { update((s) => { s.familyName = v; }); toast('Family name saved'); } });
+  document.querySelectorAll<HTMLElement>('[data-colour]').forEach((b) => b.addEventListener('click', () => update((s) => { s.colour = b.dataset.colour; })));
+  $('cats').addEventListener('click', (e) => { const c = (e.target as HTMLElement).dataset.rmcat; if (c) update((s) => { s.categories = (s.categories ?? family.categories).filter((x) => x !== c); }); });
+  $('catform').addEventListener('submit', (e) => { e.preventDefault(); const v = ($('newcat') as HTMLInputElement).value.trim(); if (!v) return; update((s) => { const l = s.categories ?? [...family.categories]; if (!l.includes(v)) l.push(v); s.categories = l; }); ($('newcat') as HTMLInputElement).value = ''; });
+  $('county').addEventListener('change', (e) => update((s) => { s.county = (e.target as HTMLSelectElement).value; }));
+  $('nearby').addEventListener('change', (e) => update((s) => { s.nearby = (e.target as HTMLInputElement).checked; }));
+  $('people').addEventListener('change', async (e) => {
+    const inp = e.target as HTMLInputElement; const name = inp.dataset.photo; const f = inp.files?.[0]; if (!name || !f) return;
+    const url = await resize(f, 400); update((s) => { s.photos[name] = url; }); toast(`${name}'s photo updated`);
+  });
+  $('people').addEventListener('click', (e) => {
+    const n = (e.target as HTMLElement).dataset.role; if (!n) return;
+    toast(`Demo: ${n}'s role would change here`);
+  });
+  $('coverfile').addEventListener('change', async (e) => {
+    const files = [...((e.target as HTMLInputElement).files ?? [])].slice(0, 4);
+    for (const f of files) {
+      const url = await resize(f, 1200);
+      const fig = document.createElement('figure'); fig.className = 'snap';
+      fig.innerHTML = `<img src="${url}" alt=""><figcaption>${esc(f.name.replace(/\.[^.]+$/, ''))}</figcaption>`;
+      $('coverpick').insertBefore(fig, $('coverpick').lastElementChild);
+    }
+    toast('Photos added (demo: shown here only, not saved)');
+  });
+  $('invitebtn').addEventListener('click', () => ($('invitedlg') as HTMLDialogElement).showModal());
+  $('childbtn').addEventListener('click', () => ($('childdlg') as HTMLDialogElement).showModal());
+  const colourOf = () => ['#D9822B', '#2F6FDB', '#1F7A4D', '#8A4FBF'][Math.floor(Math.random() * 4)];
+  $('invform').addEventListener('submit', (e) => {
+    e.preventDefault(); const n = ($('iname') as HTMLInputElement).value.trim();
+    update((s) => { s.extraPeople.push({ name: n, full: n, initials: n.slice(0, 2), colour: colourOf(), role: 'member', age: ($('iage') as HTMLSelectElement).value, photo: '', pending: true } as any); });
+    ($('invitedlg') as HTMLDialogElement).close(); (e.target as HTMLFormElement).reset(); toast('Invite sent (demo: no email sent)');
+  });
+  $('childform').addEventListener('submit', (e) => {
+    e.preventDefault(); const n = ($('cname') as HTMLInputElement).value.trim();
+    update((s) => { s.extraPeople.push({ name: n, full: n, initials: n.slice(0, 2), colour: colourOf(), role: 'member', age: 'child', photo: '', managedBy: s.who } as any); });
+    ($('childdlg') as HTMLDialogElement).close(); (e.target as HTMLFormElement).reset(); toast(`${n}'s child account created`);
+  });
+  document.addEventListener('demo:change', draw); draw();
+</script>

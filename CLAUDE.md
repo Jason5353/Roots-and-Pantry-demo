@@ -1,0 +1,13 @@
+# Roots & Pantry demo – context for Claude
+
+Public demo of "Roots & Pantry" (working name): private family recipe books + exclusive codes from independent local food producers.
+Owner: Jason (GitHub `Jason5353`). Separate from the private Lewis family site and from BMS Cyber Defence.
+
+- Astro 7 static site, design copied from `Jason5353/lewis-family-recipes` (`src/styles/global.css` unchanged; additions in `src/styles/extra.css`).
+- All content fictional: Hartley family (`src/data/family.js`), producers + codes (`src/data/producers.js`), recipes (`src/content/recipes/*.md`), snapshots (`src/data/snapshots.json`).
+- No backend. Demo state (who's signed in, favourites, shopping list, taps, family settings) is in localStorage via `src/scripts/store.ts`; `src/scripts/demo.ts` runs on every page.
+- Deal matching: producer `kw` words matched as whole words against ingredient lines (`dealFor` in producers.js and store.ts – keep the two in step).
+- Under-13 accounts: `body[data-age=child]` hides everything with class `deal-only`. Non-admins: `.admin-only` is disabled.
+- Photos: SVG placeholders until AI photos arrive; `tools/add-photos.py <zip>` converts to WebP, strips EXIF, rewrites references.
+- Hosted on Cloudflare Pages (Git-connected, branch `main`, public, noindex). Push to `main` deploys in ~1 minute.
+- Run `npm run build` before pushing. Footer must keep the "family is fictional" notice; add "Photos are AI-generated" once AI photos are in.

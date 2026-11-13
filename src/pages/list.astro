@@ -1,0 +1,73 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { family } from '../lib';
+---
+<Layout title="Shopping list" active="list">
+  <main>
+    <div class="wrap pagehead">
+      <h1>Shopping list</h1>
+      <p class="sub">Shared with the whole family. Whoever's at the shops can tick things off.</p>
+    </div>
+    <section class="wrap pagebody">
+      <div class="listgrid">
+        <div>
+          <form class="addline" id="addform"><label class="sr-only" for="newitem">Add an item</label><input id="newitem" placeholder="Add something, e.g. eggs" autocomplete="off" /><button class="btn btn-red" type="submit">Add</button></form>
+          <div class="listcard" id="listcard"></div>
+          <p style="margin-top:14px"><button type="button" class="btn btn-ghost sm" id="cleardone">Clear ticked items</button></p>
+        </div>
+        <div class="deal-only">
+          <span class="local">📍 {family.county}</span>
+          <h2 style="font-size:32px;margin:12px 0 6px;letter-spacing:-.02em">Save on your list, buy local</h2>
+          <p class="sub" id="dealsub"></p>
+          <div class="side-deals" id="sidedeals"></div>
+          <p style="font-size:14px;color:var(--ink-soft)">Codes are used on the producer's own shop. We never share your family's details with producers.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+<script>
+  import { load, update, allPeople, dealFor, dealTagHTML, dealCardHTML, avatarHTML, esc, tap } from '../scripts/store';
+  const card = document.getElementById('listcard')!;
+  function draw() {
+    const s = load();
+    const people = allPeople(s);
+    const pers = (n: string) => people.find((p) => p.name === n) ?? people[0];
+    // Group by recipe (or "Extras" for things typed in).
+    const groups = new Map<string, { title: string; by: string; items: typeof s.list }>();
+    s.list.forEach((i) => {
+      const k = i.from ?? `extra:${i.by}`;
+      if (!groups.has(k)) groups.set(k, { title: i.fromTitle ?? 'Extras', by: i.by, items: [] });
+      groups.get(k)!.items.push(i);
+    });
+    card.innerHTML = groups.size ? [...groups.values()].map((g) => `
+      <h3>${g.title === 'Extras' ? '✏️' : '🍽️'} ${esc(g.title)}</h3>
+      <div class="sharedby">${avatarHTML(pers(g.by), s)} Added by ${esc(g.by)}</div>
+      <ul>${g.items.map((i) => `<li class="${i.done ? 'done' : ''}"><input type="checkbox" data-tick="${i.id}" ${i.done ? 'checked' : ''} aria-label="Got it"><span class="t">${esc(i.text)}</span><button class="rm" data-rm="${i.id}" aria-label="Remove">✕</button>${i.done ? '' : dealTagHTML(dealFor(i.text))}</li>`).join('')}</ul>`).join('')
+      : '<p class="listempty">Nothing on the list. Open a recipe and tap “Add to shopping list”.</p>';
+    // Deals that match what's still to buy.
+    const hits = new Map<string, { p: any; items: string[] }>();
+    s.list.filter((i) => !i.done).forEach((i) => { const p = dealFor(i.text); if (p) { if (!hits.has(p.id)) hits.set(p.id, { p, items: [] }); hits.get(p.id)!.items.push(i.text); } });
+    hits.forEach(({ p }) => tap(p.id, 0));
+    document.getElementById('dealsub')!.textContent = hits.size
+      ? `${hits.size} independent producer${hits.size > 1 ? 's' : ''} near you ${hits.size > 1 ? 'have' : 'has'} offers on things you need.`
+      : 'No local offers match your list yet. Try adding honey, cheese, sausages or flour.';
+    document.getElementById('sidedeals')!.innerHTML = [...hits.values()].map(({ p, items }) => dealCardHTML(p, `For: ${items.map(esc).join(', ')}`)).join('');
+  }
+  card.addEventListener('change', (e) => {
+    const id = (e.target as HTMLElement).dataset.tick; if (!id) return;
+    update((s) => { const i = s.list.find((x) => x.id === id); if (i) i.done = (e.target as HTMLInputElement).checked; });
+  });
+  card.addEventListener('click', (e) => {
+    const id = (e.target as HTMLElement).dataset.rm; if (!id) return;
+    update((s) => { s.list = s.list.filter((x) => x.id !== id); });
+  });
+  document.getElementById('addform')!.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const inp = document.getElementById('newitem') as HTMLInputElement; const v = inp.value.trim(); if (!v) return;
+    update((s) => { s.list.push({ id: Date.now().toString(36), text: v, by: s.who, done: false }); });
+    inp.value = ''; inp.focus();
+  });
+  document.getElementById('cleardone')!.addEventListener('click', () => update((s) => { s.list = s.list.filter((x) => !x.done); }));
+  document.addEventListener('demo:change', draw); draw();
+</script>

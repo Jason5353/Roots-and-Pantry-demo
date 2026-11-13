@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Snap from '../components/Snap.astro';
+import { snapshot } from '../lib';
+import { producers } from '../data/producers.js';
+---
+<Layout title="For local producers" description="Reach local families at the moment they plan what to cook.">
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div>
+          <span class="local">🧑‍🌾 For independent food producers</span>
+          <h1 style="margin-top:16px;font-size:clamp(40px,6vw,76px)">Reach local families <span class="l2">when they plan what to cook.</span></h1>
+          <p class="lead" style="max-width:40ch">Families keep their recipes and shopping lists in Roots &amp; Pantry. When a recipe or list needs something you make, your exclusive offer appears right beside it, but only for families in your county.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-red" href="/">See it as a family</a><a class="btn btn-ghost" href="#dash">Demo dashboard</a></div>
+        </div>
+        <div class="collage" style="height:420px">
+          <Snap s={snapshot('farmers-market')} class="c1" eager />
+          <Snap s={snapshot('scones-out-the-oven')} class="c3" eager />
+        </div>
+      </div>
+    </section>
+    <section class="wrap pagebody">
+      <h2 class="sec" style="margin-top:0">How it works</h2>
+      <div class="steps3">
+        <div class="step"><span class="n">1</span><h3>You give us an exclusive code</h3><p>For example FAMILY10 for 10% off. You choose the offer and how long it runs.</p></div>
+        <div class="step"><span class="n">2</span><h3>We show it where it matters</h3><p>Next to recipe ingredients and shopping-list items that use your products, for families in your county (and neighbouring counties if you like).</p></div>
+        <div class="step"><span class="n">3</span><h3>Families buy from you direct</h3><p>They tap through to your own online shop and use the code. You keep the customer and the sale.</p></div>
+      </div>
+      <div class="two" style="margin-top:28px">
+        <div class="panel"><h2>Our promises</h2><ul>
+          <li><b>Independent producers only.</b> No supermarkets or big brands.</li>
+          <li><b>Local first.</b> Offers are shown by county.</li>
+          <li><b>No family data shared.</b> You see totals, never who the families are.</li>
+          <li><b>No adverts to children.</b> Offers are switched off for under-13 accounts, and sponsored spots are always labelled.</li></ul></div>
+        <div class="panel"><h2>Pilot pricing (draft)</h2><ul>
+          <li><b>Founding producers:</b> free listing during the pilot.</li>
+          <li><b>Later:</b> a small monthly listing fee, an optional labelled “Sponsored” spotlight, or a small commission on orders that use your code.</li></ul>
+          <p style="color:var(--ink-soft);font-size:15px;margin:12px 0 0">Nothing is charged in this demo.</p></div>
+      </div>
+      <h2 class="sec" id="dash">Demo producer dashboard</h2>
+      <div class="panel">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <label for="dp"><b>Producer</b></label>
+          <select id="dp" style="font:600 17px var(--display);border:2px solid var(--ink);border-radius:999px;padding:9px 14px;background:#fff;color:var(--ink)">{producers.map((p) => <option value={p.id}>{p.name}</option>)}</select>
+          <span style="font-size:14px;color:var(--ink-soft)">Fictional producer · last 30 days · sample numbers plus your taps in this demo</span>
+        </div>
+        <div class="stats">
+          <div class="stat"><small>Offer shown to families</small><strong id="st0">0</strong></div>
+          <div class="stat"><small>Taps through to your shop</small><strong id="st1">0</strong></div>
+          <div class="stat"><small>Code copied</small><strong id="st2">0</strong></div>
+          <div class="stat"><small>Orders using your code</small><strong style="font-size:18px;line-height:1.2;display:block;margin-top:8px">From your own shop's records</strong></div>
+        </div>
+        <p style="font-size:15px;color:var(--ink-soft);margin:14px 0 0">Taps and copies are counted by the app. Orders are counted by the code in your own shop system, so you always know what you're getting.</p>
+      </div>
+      <div class="panel producer-cta">
+        <div style="font-size:44px">🤝</div>
+        <div style="flex:1;min-width:240px"><h2 style="margin:0 0 4px">Interested in the pilot?</h2><p style="margin:0;color:var(--ink-soft)">We're looking for founding producers in Shropshire. Contact details will be added here.</p></div>
+      </div>
+    </section>
+  </main>
+</Layout>
+<script>
+  import { load, producers } from '../scripts/store';
+  const sel = document.getElementById('dp') as HTMLSelectElement;
+  function draw() {
+    const p = producers.find((x) => x.id === sel.value)!; const t = load().taps[p.id] ?? [0, 0, 0];
+    [0, 1, 2].forEach((i) => (document.getElementById(`st${i}`)!.textContent = String((p.base[i] ?? 0) + t[i])));
+  }
+  sel.addEventListener('change', draw); document.addEventListener('demo:change', draw); draw();
+</script>

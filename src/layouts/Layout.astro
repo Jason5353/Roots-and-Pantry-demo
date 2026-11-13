@@ -1,0 +1,99 @@
+---
+import '../styles/global.css';
+import '../styles/extra.css';
+import Avatar from '../components/Avatar.astro';
+import { family } from '../lib';
+import { producers } from '../data/producers.js';
+interface Props { title?: string; description?: string; active?: string }
+const { title, description = 'A private family recipe book with deals from local food producers.', active = '' } = Astro.props;
+const group = family.groupName;
+const fullTitle = title ? `${title} | ${group} Recipes · Roots & Pantry demo` : `${group} Recipes · Roots & Pantry demo`;
+const nav = [
+  ['/', 'All recipes', 'home', '🏠', 'Home'],
+  ['/favourites/', 'Favourites', 'favs', '❤️', 'Favourites'],
+  ['/list/', 'Shopping list', 'list', '🛒', 'List'],
+  ['/deals/', 'Local deals', 'deals', '🏷️', 'Deals'],
+  ['/family/', 'Family', 'family', '👪', 'Family'],
+];
+// Data the demo script needs in the browser.
+const demoData = {
+  people: family.people,
+  county: family.county,
+  producers: producers.map(({ id, name, county, offer, code, icon, colour, where, kw, base }) => ({ id, name, county, offer, code, icon, colour, where, kw, base })),
+};
+---
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#E0301E" />
+  <title>{fullTitle}</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat:wght@500;700&display=swap" rel="stylesheet" />
+</head>
+<body data-age="adult" data-role="admin">
+  <div class="banner"><b>DEMO</b> · Roots &amp; Pantry · The family, recipes, producers and discount codes are all fictional.</div>
+  <header class="site">
+    <div class="wrap">
+      <a href="/" class="logo"><b data-family-name>{group}</b><span>Recipes</span></a>
+      <nav class="main" aria-label="Main">
+        {nav.map(([href, label, key]) => (
+          <a href={href} class={`${active === key ? 'on' : ''} ${key === 'deals' ? 'deal-only' : ''}`}>{label}{key === 'list' && <span class="count" data-list-count></span>}</a>
+        ))}
+      </nav>
+      <div class="spacer"></div>
+      <button type="button" class="who" id="whobtn" aria-label="Switch person">
+        <span id="whoav"><Avatar name="Dave" /></span><span class="nm" id="whoname">Dave</span>
+      </button>
+      <a href="/add/" class="btn btn-red">+<span class="long"> Add a recipe</span></a>
+    </div>
+  </header>
+
+  <slot />
+
+  <footer class="site">
+    <div class="wrap">
+      <span><span data-family-name>{group}</span> Recipes. Just for us. · Powered by <b>Roots &amp; Pantry</b> (demo)</span>
+      <span>Every recipe credits where it came from · Local deals from independent producers · <a href="/producers/">For producers</a> · Photos are illustrative and the family is fictional.</span>
+    </div>
+  </footer>
+
+  <nav class="tabbar" aria-label="Main">
+    {nav.map(([href, , key, icon, short]) => (
+      <a href={href} class={`${active === key ? 'on' : ''} ${key === 'deals' ? 'deal-only' : ''}`}><span class="i">{icon}</span>{short}{key === 'list' && <span class="count" data-list-count></span>}</a>
+    ))}
+  </nav>
+
+  <dialog class="pop" id="whodlg" aria-labelledby="whotitle">
+    <h2 id="whotitle">Who's cooking?</h2>
+    <p>This is the fictional Hartley family. Pick a person to see the site as them. Each role sees slightly different things.</p>
+    <div class="whogrid">
+      {family.people.map((p) => (
+        <button type="button" data-login={p.name}>
+          <Avatar name={p.name} />{p.name}
+          <span>{p.role === 'admin' && <span class="role admin">Admin</span>}<span class={`role ${p.age === 'child' ? 'child' : p.age === 'teen' ? 'teen' : ''}`}>{p.age === 'child' ? 'Under 13' : p.age === 'teen' ? '13–17' : 'Adult'}</span></span>
+        </button>
+      ))}
+    </div>
+    <p style="font-size:14px">In the real app, adults and teens sign in with a one-time email code (no passwords). Under-13s use a picture login a parent sets up.</p>
+    <div class="actions"><button type="button" class="btn btn-ghost" data-close>Close</button></div>
+  </dialog>
+
+  <dialog class="pop" id="dealdlg" aria-labelledby="dealtitle">
+    <h2 id="dealtitle"></h2>
+    <div id="dealbody"></div>
+    <div class="actions"><button type="button" class="btn btn-ghost" data-close>Close</button></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="application/json" id="demo-data" set:html={JSON.stringify(demoData)}></script>
+  <script>
+    import '../scripts/demo.ts';
+  </script>
+</body>
+</html>

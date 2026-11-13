@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import RecipeCard from '../components/RecipeCard.astro';
+const recipes = (await getCollection('recipes')).sort((a, b) => +b.data.addedOn - +a.data.addedOn);
+---
+<Layout title="Favourites" active="favs">
+  <main>
+    <div class="wrap pagehead">
+      <h1 id="favtitle">Your favourites</h1>
+      <p class="sub">Everyone in the family keeps their own favourites. Tap the heart on any recipe to save it here.</p>
+    </div>
+    <section class="wrap pagebody">
+      <div class="grid" id="favgrid">{recipes.map((r) => <RecipeCard r={r} />)}</div>
+      <p class="noresults" id="nofavs">No favourites yet. Go to <a href="/">all recipes</a> and tap a heart.</p>
+    </section>
+  </main>
+</Layout>
+<script>
+  import { load, me } from '../scripts/store';
+  function show() {
+    const s = load(); const u = me(s); const favs = s.favs[u.name] ?? [];
+    let n = 0;
+    document.querySelectorAll<HTMLElement>('#favgrid [data-card]').forEach((el) => { const on = favs.includes(el.dataset.id!); el.hidden = !on; if (on) n++; });
+    document.getElementById('nofavs')!.style.display = n ? 'none' : 'block';
+    document.getElementById('favtitle')!.textContent = `${u.name}'s favourites`;
+  }
+  document.addEventListener('demo:change', show); show();
+</script>

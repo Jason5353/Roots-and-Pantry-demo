@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Snap from '../components/Snap.astro';
+import { family, pickSnapshots } from '../lib';
+const [a, b] = pickSnapshots('add-page', 2);
+---
+<Layout title="Add a recipe">
+  <main class="addpage">
+    <div class="wrap">
+      <div>
+        <h1>Add a recipe</h1>
+        <p class="lead">Paste a link to a recipe you've found, or type in one of your own. It goes straight into the family book.</p>
+        <div class="tabs" role="tablist">
+          <button type="button" role="tab" aria-selected="true" data-tab="link">From a link</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="type">Type it in</button>
+        </div>
+        <form id="linkform" data-panel="link">
+          <div class="field"><label for="url">Recipe link</label>
+            <div class="urlbox"><input id="url" type="url" placeholder="https://…" required /><button class="btn btn-red" type="submit">Save it</button></div></div>
+          <p class="hint">We read the recipe from the page, keep a credit and a link to the original, and save it in your family book only.</p>
+        </form>
+        <form id="typeform" data-panel="type" hidden>
+          <div class="field"><label for="t-title">Recipe name</label><input id="t-title" required placeholder="e.g. Grandad's chilli" /></div>
+          <div class="row2">
+            <div class="field"><label for="t-cat">Category</label><select id="t-cat">{family.categories.map((c) => <option>{c}</option>)}</select></div>
+            <div class="field"><label for="t-serves">Serves</label><input id="t-serves" type="number" min="1" value="4" required /></div>
+          </div>
+          <div class="field"><label for="t-ing">Ingredients <span class="opt">(one per line)</span></label><textarea id="t-ing" required placeholder="500 g beef mince&#10;2 tbsp honey&#10;1 onion"></textarea></div>
+          <div class="field"><label for="t-steps">Method <span class="opt">(one step per line)</span></label><textarea id="t-steps" required></textarea></div>
+          <div class="field"><label for="t-note">The story behind it <span class="opt">(optional)</span></label><input id="t-note" placeholder="Who taught you this?" /></div>
+          <button class="btn btn-red" type="submit">Save recipe</button>
+        </form>
+        <div class="status" id="status" role="status" aria-live="polite"></div>
+      </div>
+      <div class="addside"><Snap s={a} /><Snap s={b} /></div>
+    </div>
+  </main>
+</Layout>
+<script>
+  import { dealFor, esc } from '../scripts/store';
+  const tabs = document.querySelectorAll<HTMLButtonElement>('[data-tab]');
+  tabs.forEach((t) => t.addEventListener('click', () => {
+    tabs.forEach((x) => x.setAttribute('aria-selected', String(x === t)));
+    document.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => (p.hidden = p.dataset.panel !== t.dataset.tab));
+  }));
+  const status = document.getElementById('status')!;
+  const say = (html: string) => { status.className = 'status ok'; status.innerHTML = html; };
+  document.getElementById('linkform')!.addEventListener('submit', (e) => {
+    e.preventDefault();
+    say('<strong>Demo only.</strong> In the real app the recipe would be read from that page and appear in your family book within a minute, with a credit and a link to the original. Local deals are matched to its ingredients automatically.');
+  });
+  document.getElementById('typeform')!.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const lines = (document.getElementById('t-ing') as HTMLTextAreaElement).value.split('\n').map((x) => x.trim()).filter(Boolean);
+    const hits = [...new Set(lines.map((l) => dealFor(l)?.name).filter(Boolean))];
+    say(`<strong>Demo only.</strong> In the real app “${esc((document.getElementById('t-title') as HTMLInputElement).value)}” would now be saved for the whole family.` +
+      (hits.length ? `<br>🏷️ Local deals found for your ingredients: ${hits.map((h) => esc(h!)).join(', ')}.` : ''));
+  });
+</script>

@@ -1,0 +1,175 @@
+/* Roots & Pantry demo additions on top of the family site's global.css */
+:root { --basil-soft: #E9F5EE }
+
+/* demo banner */
+.banner { background: var(--ink); color: #fff; text-align: center; font-size: 14px; padding: 7px 12px; line-height: 1.4 }
+.banner b { color: var(--yolk) }
+
+/* header */
+.logo b { font: inherit; display: inline }
+nav.main a.on { color: var(--pepper) }
+.count { display: inline-grid; place-items: center; min-width: 22px; height: 22px; border-radius: 999px; background: var(--pepper); color: #fff; font-size: 12px; font-weight: 800; margin-left: 4px; padding: 0 6px; vertical-align: 1px }
+.count:empty, .count[data-n="0"] { display: none }
+.who { display: flex; align-items: center; gap: 8px; border: 2px solid var(--ink); border-radius: 999px; padding: 3px 14px 3px 3px; font: 700 16px/1 var(--display); background: #fff; color: var(--ink); cursor: pointer }
+.who .av { width: 36px; height: 36px }
+.av.ph { overflow: hidden; padding: 0 }
+.av.ph img { width: 100%; height: 100%; object-fit: cover; display: block }
+
+/* recipe cards with heart + deal tag */
+.cardwrap { position: relative; min-width: 0 }
+.cardwrap .heart { position: absolute; right: 10px; top: 10px; width: 40px; height: 40px; border-radius: 50%; background: #fff; border: 0; display: grid; place-items: center; font-size: 18px; box-shadow: 0 2px 8px rgba(30, 42, 74, .15); cursor: pointer }
+.cardwrap .dealtag { margin-top: 8px }
+.grid.featured .cardwrap:first-child { grid-column: span 2; grid-row: span 2 }
+.grid.featured .cardwrap:first-child .ph { aspect-ratio: 4/3.2 }
+.grid.featured .cardwrap:first-child h3 { font-size: 30px }
+
+/* deal tags */
+.dealtag { display: inline-flex; align-items: center; gap: 6px; font: 700 13px/1.25 var(--display); background: var(--basil-soft); color: var(--basil); border: 1.5px solid var(--basil); border-radius: 999px; padding: 6px 10px; cursor: pointer; text-align: left; max-width: 100% }
+.dealtag:hover { background: #fff }
+.ingredients li .dealtag { margin: 0 0 10px 34px }
+
+/* deal cards */
+.deals-wrap { background: var(--basil-soft); padding: 48px 0 54px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line) }
+.deals-wrap h2 { font-weight: 800; font-size: 40px; letter-spacing: -.025em; margin: 0 0 6px; line-height: 1.05 }
+.deals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px }
+.deal { background: #fff; border: 2px solid var(--ink); border-radius: 20px; padding: 18px; box-shadow: 5px 5px 0 var(--yolk); display: flex; flex-direction: column; gap: 10px }
+.deal .top { display: flex; gap: 12px; align-items: center }
+.deal .logo2 { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; font-size: 28px; flex: none; border: 2px solid var(--ink) }
+.deal h3 { margin: 0; font-size: 20px; line-height: 1.1 }
+.deal .where { font-size: 14px; color: var(--ink-soft) }
+.deal .offer { font: 700 30px/1 var(--hand); color: var(--pepper) }
+.deal .codebox { display: flex; gap: 8px; align-items: center; flex-wrap: wrap }
+.code { font: 800 17px/1 ui-monospace, Menlo, monospace; letter-spacing: .08em; border: 2px dashed var(--basil); color: var(--basil); border-radius: 12px; padding: 10px 14px; background: var(--basil-soft) }
+.btn-green { background: var(--basil); color: #fff }
+.btn-green:hover { background: #17623D }
+.btn.sm { padding: 10px 14px; font-size: 15px }
+.deal .uses { font-size: 14px; color: var(--ink-soft) }
+.local { display: inline-flex; align-items: center; gap: 6px; font: 700 13px/1 var(--display); background: var(--yolk); border-radius: 999px; padding: 6px 10px }
+
+/* recipe page extras */
+.tools .btn-fav { border-color: var(--pepper); color: var(--pepper) }
+.tools .btn-fav[aria-pressed="true"] { background: #FDECEA }
+.dealnote { font-size: 14px; color: var(--ink-soft); margin: 14px 0 0 }
+
+/* generic page heads */
+.pagehead { padding: 44px 0 10px }
+.pagehead h1 { font-weight: 800; font-size: clamp(38px, 5vw, 64px); line-height: .98; letter-spacing: -.03em; margin: 0 0 10px; font-variation-settings: "opsz" 96 }
+.pagehead .sub { font-size: 19px; max-width: 62ch }
+.pagebody { padding: 10px 0 70px }
+
+/* shopping list */
+.listgrid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 44px; align-items: start }
+.listcard { background: var(--yolk-soft); border-radius: 22px; padding: 24px }
+.listcard h3 { margin: 18px 0 4px; font-size: 20px; display: flex; align-items: center; gap: 8px }
+.listcard h3:first-child { margin-top: 0 }
+.listcard ul { list-style: none; margin: 0; padding: 0 }
+.listcard li { border-top: 1px dashed #E7CF8C; padding: 10px 0; display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 6px 12px; align-items: start }
+.listcard li input { appearance: none; width: 22px; height: 22px; border: 2px solid var(--ink); border-radius: 6px; flex: none; margin-top: 2px; background: #fff; cursor: pointer }
+.listcard li input:checked { background: var(--basil); border-color: var(--basil); box-shadow: inset 0 0 0 3px #fff }
+.listcard li.done .t { text-decoration: line-through; color: var(--ink-soft) }
+.listcard li .t { flex: 1; min-width: 0 }
+.listcard li .rm { border: 0; background: none; color: var(--ink-soft); cursor: pointer; font-size: 16px; padding: 2px 6px }
+.listcard li .dealtag { grid-column: 2 / 4; justify-self: start }
+.addline { display: flex; gap: 10px; margin: 0 0 18px }
+.addline input { flex: 1; min-width: 0; font: 500 18px var(--display); border: 2px solid var(--ink); border-radius: 999px; padding: 12px 18px; box-shadow: 5px 5px 0 var(--yolk); color: var(--ink) }
+.sharedby { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-soft) }
+.sharedby .av { width: 24px; height: 24px; font-size: 10px }
+.side-deals { display: grid; gap: 20px }
+.listempty { color: var(--ink-soft); padding: 10px 0 }
+
+/* family page */
+.famgrid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 44px; align-items: start }
+.panel { border: 2px solid var(--ink); border-radius: 22px; padding: 24px; background: #fff }
+.panel h2 { font-weight: 800; font-size: 28px; margin: 0 0 14px; letter-spacing: -.02em }
+.coverpick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 6px 0 10px }
+.coverpick .snap { padding: 6px 6px 26px }
+.coverpick .snap figcaption { font-size: 16px; bottom: 4px }
+.coverpick .add { border: 2px dashed var(--ink-soft); border-radius: 6px; display: grid; place-items: center; color: var(--ink-soft); font-weight: 700; text-align: center; font-size: 15px; cursor: pointer; min-height: 110px }
+.swatches { display: flex; gap: 10px; flex-wrap: wrap }
+.swatches button { width: 40px; height: 40px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 2px var(--line); cursor: pointer }
+.swatches button[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--ink) }
+.person { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--line); flex-wrap: wrap }
+.person .av { width: 60px; height: 60px; font-size: 18px }
+.person .nm { flex: 1; min-width: 150px }
+.person b { font-size: 19px }
+.role { display: inline-block; font: 700 12px/1 var(--display); border-radius: 999px; padding: 5px 9px; margin: 4px 4px 0 0; background: var(--line) }
+.role.admin { background: var(--yolk) }
+.role.child { background: #DCE8FB; color: #1F4E9A }
+.role.teen { background: #EADCF6; color: #5B2F86 }
+.catchips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px }
+.catchips .chip button { border: 0; background: none; color: var(--ink-soft); cursor: pointer; font-size: 14px; padding: 0 0 0 2px }
+.note-child { background: #DCE8FB; border-radius: 16px; padding: 14px 16px; color: #1F4E9A; font-size: 15px; margin-top: 14px }
+.adminonly-note { background: var(--yolk-soft); border-radius: 14px; padding: 12px 14px; font-size: 15px; margin: 0 0 14px }
+.filebtn { position: relative; overflow: hidden }
+.filebtn input { position: absolute; inset: 0; opacity: 0; cursor: pointer }
+
+/* deals page */
+.countybar { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; background: var(--yolk-soft); border-radius: 18px; padding: 14px 18px; margin: 8px 0 28px }
+.countybar select { font: 600 17px var(--display); border: 2px solid var(--ink); border-radius: 999px; padding: 9px 14px; background: #fff; color: var(--ink) }
+.toggle { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; cursor: pointer }
+.toggle input { appearance: none; width: 46px; height: 26px; border-radius: 999px; background: var(--line); position: relative; cursor: pointer; margin: 0 }
+.toggle input::after { content: ""; position: absolute; left: 3px; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, .2); transition: left .15s }
+.toggle input:checked { background: var(--basil) }
+.toggle input:checked::after { left: 23px }
+.nodeals { display: none; font-size: 18px; color: var(--ink-soft); padding: 10px 0 30px }
+.producer-cta { margin-top: 34px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; box-shadow: 5px 5px 0 var(--yolk) }
+
+/* producers page */
+.steps3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px }
+.step { border: 2px solid var(--ink); border-radius: 20px; padding: 20px }
+.step .n { width: 44px; height: 44px; border-radius: 50%; background: var(--pepper); color: #fff; display: grid; place-items: center; font: 800 20px/1 var(--display) }
+.step h3 { margin: 12px 0 6px; font-size: 21px }
+.step p { margin: 0; color: var(--ink-soft); font-size: 16px }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px }
+.stat { background: var(--yolk-soft); border-radius: 18px; padding: 16px }
+.stat small { display: block; color: var(--ink-soft); font-size: 14px }
+.stat strong { font-size: 36px; font-weight: 800; letter-spacing: -.02em }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 22px }
+.two ul { margin: 0; padding-left: 20px }
+.two li { margin-bottom: 6px }
+h2.sec { font-weight: 800; font-size: 34px; letter-spacing: -.02em; margin: 40px 0 16px }
+
+/* dialogs + toast */
+dialog.pop { border: 0; border-radius: 24px; padding: 26px; max-width: min(460px, calc(100vw - 32px)); color: var(--ink); box-shadow: 0 20px 60px rgba(30, 42, 74, .3) }
+dialog.pop::backdrop { background: rgba(30, 42, 74, .55) }
+dialog.pop h2 { margin: 0 0 10px; font-size: 26px; letter-spacing: -.02em }
+dialog.pop p { color: var(--ink-soft) }
+dialog.pop .actions { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; margin-top: 18px }
+.whogrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px; margin-top: 14px }
+.whogrid button { border: 2px solid var(--line); background: #fff; border-radius: 18px; padding: 14px 8px; display: flex; flex-direction: column; align-items: center; gap: 6px; font: 700 16px/1.1 var(--display); color: var(--ink); cursor: pointer }
+.whogrid button:hover, .whogrid button[aria-pressed="true"] { border-color: var(--ink) }
+.whogrid .av { width: 64px; height: 64px; font-size: 20px }
+.toast { position: fixed; left: 50%; bottom: 96px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 12px 20px; border-radius: 999px; font-weight: 700; z-index: 120; opacity: 0; transition: opacity .2s; pointer-events: none; max-width: calc(100vw - 32px); text-align: center }
+.toast.show { opacity: 1 }
+.childnote { display: none; background: #DCE8FB; color: #1F4E9A; border-radius: 16px; padding: 12px 16px; margin: 0 0 18px; font-size: 16px }
+
+/* under-13 accounts: no deals, no adverts; grown-ups do deleting and inviting */
+body[data-age="child"] .deal-only { display: none !important }
+body[data-age="child"] .childnote { display: block }
+body[data-age="child"] .adult-only { display: none !important }
+body:not([data-role="admin"]) .admin-only { opacity: .45; pointer-events: none }
+
+/* bottom tab bar on phones (the main nav is hidden below 980px) */
+.tabbar { display: none }
+@media (max-width: 980px) {
+  .tabbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: #fff; border-top: 1px solid var(--line); justify-content: space-around; padding: 6px 0 calc(6px + env(safe-area-inset-bottom)) }
+  .tabbar a { text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 2px; font: 700 12px/1 var(--display); color: var(--ink-soft); padding: 4px 6px; position: relative }
+  .tabbar a span.i { font-size: 22px; line-height: 1 }
+  .tabbar a.on { color: var(--pepper) }
+  .tabbar .count { position: absolute; top: -2px; right: 0 }
+  body { padding-bottom: 72px }
+  .deals { grid-template-columns: 1fr 1fr }
+  .listgrid, .famgrid, .steps3, .two { grid-template-columns: 1fr }
+  .stats { grid-template-columns: 1fr 1fr }
+  .grid.featured .cardwrap:first-child { grid-column: span 2; grid-row: auto }
+}
+@media (max-width: 600px) {
+  .deals { grid-template-columns: 1fr }
+  .coverpick { grid-template-columns: 1fr 1fr }
+  .who { padding-right: 3px } .who .nm { display: none }
+  header.site .btn-red .long { display: none }
+  .grid.featured .cardwrap:first-child { grid-column: auto }
+  .grid.featured .cardwrap:first-child h3 { font-size: 24px }
+  .deals-wrap h2 { font-size: 32px }
+}
+@media print { .banner, .tabbar, .dealtag, .heart { display: none !important } }

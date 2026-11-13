@@ -1,0 +1,25 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Avatar from './Avatar.astro';
+import DealTag from './DealTag.astro';
+import { mins } from '../lib';
+import { dealFor } from '../data/producers.js';
+interface Props { r: CollectionEntry<'recipes'> }
+const { r } = Astro.props;
+const d = r.data;
+const search = [d.title, d.description, d.source.name, d.addedBy, d.category, d.cuisine ?? '', ...d.tags, ...d.ingredients].join(' ').toLowerCase();
+const deal = d.ingredients.map((i) => dealFor(i)).find(Boolean) ?? null;
+---
+<div class="cardwrap" data-card data-id={r.id}
+   data-category={d.category} data-by={d.addedBy} data-tags={d.tags.join('|')} data-search={search}>
+  <a href={`/recipes/${r.id}/`} class="card">
+    <div class="ph">
+      {d.image ? <img src={d.image} alt="" loading="lazy" decoding="async" /> : <span class="noimg">{d.title}</span>}
+      <span class="cat">{d.category}</span>
+    </div>
+    <h3>{d.title}</h3>
+    <div class="meta"><Avatar name={d.addedBy} />{d.addedBy}{d.totalMins || d.prepMins || d.cookMins ? <span>{mins(d.totalMins || (d.prepMins ?? 0) + (d.cookMins ?? 0))}</span> : null}</div>
+  </a>
+  <button type="button" class="heart" data-fav={r.id} aria-pressed="false" aria-label={`Favourite ${d.title}`}>🤍</button>
+  <DealTag p={deal} />
+</div>

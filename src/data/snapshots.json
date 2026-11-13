@@ -1,0 +1,18 @@
+[
+  { "file": "/photos/bbq-dave-sam.svg", "caption": "BBQ season", "alt": "Dave and Sam at the barbecue", "w": 1200, "h": 900 },
+  { "file": "/photos/jam-tarts-nana-lily.svg", "caption": "Jam tarts with Nana", "alt": "Nana Mags and Lily making jam tarts", "w": 1200, "h": 900 },
+  { "file": "/photos/lilys-birthday.svg", "caption": "Lily's 8th!", "alt": "Lily blowing out her birthday candles", "w": 960, "h": 1200 },
+  { "file": "/photos/sunday-roast.svg", "caption": "Sunday roast", "alt": "The family round the table for Sunday roast", "w": 1200, "h": 900 },
+  { "file": "/photos/priya-curry-night.svg", "caption": "Curry night", "alt": "Priya stirring a pot of curry", "w": 1200, "h": 900 },
+  { "file": "/photos/sams-midnight-toastie.svg", "caption": "Midnight toastie", "alt": "Sam making a late-night toastie", "w": 1200, "h": 900 },
+  { "file": "/photos/pancake-day.svg", "caption": "Pancake Day flip", "alt": "Dave flipping a pancake while Lily laughs", "w": 960, "h": 1200 },
+  { "file": "/photos/christmas-eve-ham.svg", "caption": "Christmas Eve", "alt": "Glazing the Christmas ham", "w": 1200, "h": 900 },
+  { "file": "/photos/gingerbread-day.svg", "caption": "Gingerbread day", "alt": "Sam and Lily icing gingerbread people", "w": 1200, "h": 900 },
+  { "file": "/photos/nana-at-the-hob.svg", "caption": "Nana at the hob", "alt": "Nana Mags stirring custard", "w": 960, "h": 1200 },
+  { "file": "/photos/pizza-night.svg", "caption": "Pizza night", "alt": "Priya and Lily topping pizzas", "w": 1200, "h": 900 },
+  { "file": "/photos/hillside-picnic.svg", "caption": "Picnic on the hill", "alt": "Family picnic on a hillside", "w": 1200, "h": 900 },
+  { "file": "/photos/farmers-market.svg", "caption": "Market morning", "alt": "Priya and Nana at a cheese stall", "w": 1200, "h": 900 },
+  { "file": "/photos/washing-up.svg", "caption": "Washing-up crew", "alt": "Dave and Sam doing the washing up", "w": 1200, "h": 900 },
+  { "file": "/photos/scones-out-the-oven.svg", "caption": "Scones are ready", "alt": "Cheese scones coming out of the oven", "w": 1200, "h": 900 },
+  { "file": "/photos/marshmallow-campfire.svg", "caption": "Marshmallow night", "alt": "Toasting marshmallows round the fire pit", "w": 1200, "h": 900 }
+]

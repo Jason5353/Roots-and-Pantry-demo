@@ -1,0 +1,10 @@
+---
+// Small green "local deal" tag shown under ingredients, on cards and on shopping-list items.
+interface Props { p: { id: string; name: string; offer: string } | null; short?: boolean }
+const { p, short = false } = Astro.props;
+---
+{p && (
+  <button type="button" class="dealtag deal-only" data-deal={p.id} title={`Local deal from ${p.name}`}>
+    🏷️ {p.offer}{!short && <> · {p.name}</>}
+  </button>
+)}

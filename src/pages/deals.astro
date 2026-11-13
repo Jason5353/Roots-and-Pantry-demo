@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import DealCard from '../components/DealCard.astro';
+import { family } from '../lib';
+import { producers, counties, dealFor } from '../data/producers.js';
+const recipes = await getCollection('recipes');
+const uses = (p: any) => recipes.filter((r) => r.data.ingredients.some((i) => dealFor(i, [p]))).map((r) => r.data.title);
+---
+<Layout title="Local deals" active="deals">
+  <main>
+    <div class="wrap pagehead">
+      <span class="local">📍 Independent producers only</span>
+      <h1 style="margin-top:14px">Local deals</h1>
+      <p class="sub">Exclusive codes from small food producers near you. No supermarkets, no big brands. Use the code on the producer's own shop.</p>
+    </div>
+    <section class="wrap pagebody">
+      <div class="childnote">🌈 Deals are switched off for child accounts. Ask a grown-up!</div>
+      <div class="countybar deal-only">
+        <label for="county"><b>Your county</b></label>
+        <select id="county">{counties.map((c) => <option selected={c === family.county}>{c}</option>)}</select>
+        <label class="toggle"><input type="checkbox" id="nearby" /> Include neighbouring counties</label>
+        <span style="margin-left:auto;font-size:15px;color:var(--ink-soft)" id="dealcount"></span>
+      </div>
+      <div class="deals" id="dealgrid">{producers.map((p) => <DealCard p={p} uses={uses(p)} />)}</div>
+      <p class="nodeals" id="nodeals">No producers have joined in this county yet. Know a great local producer? <a href="/producers/">Tell them about Roots &amp; Pantry</a>.</p>
+      <div class="panel producer-cta deal-only">
+        <div style="font-size:44px">🧑‍🌾</div>
+        <div style="flex:1;min-width:240px"><h2 style="margin:0 0 4px">Are you a local producer?</h2><p style="margin:0;color:var(--ink-soft)">Put your offer in front of families who are planning what to cook this week. Founding producers list for free.</p></div>
+        <a class="btn btn-red" href="/producers/">Find out more</a>
+      </div>
+    </section>
+  </main>
+</Layout>
+<script>
+  import { load, update, visibleProducers, tap, homeCounty } from '../scripts/store';
+  const sel = document.getElementById('county') as HTMLSelectElement;
+  const near = document.getElementById('nearby') as HTMLInputElement;
+  function draw() {
+    const s = load();
+    sel.value = s.county ?? homeCounty; near.checked = !!s.nearby;
+    const ok = visibleProducers(s).map((p) => p.id);
+    let n = 0;
+    document.querySelectorAll<HTMLElement>('#dealgrid .deal').forEach((el) => { const on = ok.includes(el.dataset.producer!); el.hidden = !on; if (on) n++; });
+    document.getElementById('nodeals')!.style.display = n ? 'none' : 'block';
+    document.getElementById('dealcount')!.textContent = `${n} producer${n === 1 ? '' : 's'}`;
+  }
+  sel.addEventListener('change', () => update((s) => { s.county = sel.value; }));
+  near.addEventListener('change', () => update((s) => { s.nearby = near.checked; }));
+  document.addEventListener('demo:change', draw); draw();
+  visibleProducers().forEach((p) => tap(p.id, 0));
+</script>

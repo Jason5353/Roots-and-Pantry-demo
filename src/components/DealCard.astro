@@ -1,0 +1,18 @@
+---
+// A producer's offer with its code, a copy button and a link to the producer's own shop.
+interface Props { p: any; uses?: string[] }
+const { p, uses = [] } = Astro.props;
+---
+<div class="deal deal-only" data-county={p.county} data-producer={p.id}>
+  <div class="top">
+    <span class="logo2" style={`background:${p.colour}`}>{p.icon}</span>
+    <div><h3>{p.name}</h3><div class="where">{p.where}</div></div>
+  </div>
+  <div class="offer">{p.offer}</div>
+  <div class="codebox">
+    <span class="code">{p.code}</span>
+    <button type="button" class="btn btn-ghost sm" data-copy={p.id}>Copy</button>
+    <button type="button" class="btn btn-green sm" data-shop={p.id}>Shop now ↗</button>
+  </div>
+  {uses.length > 0 && <div class="uses">In your recipes: {uses.join(', ')}</div>}
+</div>

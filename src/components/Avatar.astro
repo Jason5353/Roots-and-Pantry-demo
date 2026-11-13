@@ -1,0 +1,10 @@
+---
+// Profile photo if the person has one, otherwise coloured initials (like the family site).
+// data-person lets the demo script swap in a photo uploaded on the Family page.
+import { person } from '../lib';
+interface Props { name: string; class?: string }
+const p = person(Astro.props.name);
+---
+<span class={`av ${p.photo ? 'ph' : ''} ${Astro.props.class ?? ''}`} style={`background:${p.colour}`} data-person={p.name} aria-hidden="true">
+  {p.photo ? <img src={p.photo} alt="" loading="lazy" decoding="async" /> : p.initials}
+</span>
