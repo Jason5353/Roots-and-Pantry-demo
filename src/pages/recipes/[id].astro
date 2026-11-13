@@ -86,7 +86,7 @@ const facts = [
           <button class="btn btn-ghost" type="button" onclick="window.print()">Print</button>
           <button class="btn btn-ghost" type="button" id="wake" hidden>Keep screen on</button>
           {d.source.url && <a class="btn btn-ghost" href={d.source.url} rel="noopener noreferrer" target="_blank">Open original</a>}
-          <a class="btn btn-ghost" href="/add/">Edit</a>
+          <a class="btn btn-ghost" href={`/add/?edit=${encodeURIComponent(r.id)}`}>Edit</a>
           <button class="btn btn-ghost btn-del" type="button" id="delbtn" data-owner={d.addedBy}>Delete</button>
         </div>
         <h2>Method</h2>
@@ -95,7 +95,7 @@ const facts = [
         </ol>
         {d.source.url
           ? <p class="credit">This recipe was saved from <b>{d.source.name}</b> for our family's own use. All credit to the original author.</p>
-          : <p class="credit">Typed in by <b>{d.addedBy}</b>{d.source.name !== 'Lewis family recipe' && <> from <b>{d.source.name}</b></>}.</p>}
+          : <p class="credit">Typed in by <b>{d.addedBy}</b>{d.source.name !== 'Hartley family recipe' && <> from <b>{d.source.name}</b></>}.</p>}
       </div>
     </div>
 

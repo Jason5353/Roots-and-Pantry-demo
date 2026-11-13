@@ -10,4 +10,5 @@ Owner: Jason (GitHub `Jason5353`). Separate from the private Lewis family site a
 - Under-13 accounts: `body[data-age=child]` hides everything with class `deal-only`. Non-admins: `.admin-only` is disabled.
 - Photos: SVG placeholders until AI photos arrive; `tools/add-photos.py <zip>` converts to WebP, strips EXIF, rewrites references.
 - Hosted on Cloudflare Pages (Git-connected, branch `main`, public, noindex). Push to `main` deploys in ~1 minute.
+- Add/Edit page (`src/pages/add.astro`) is the family site's form (with `importer/manual.js` and `/recipes/<id>.json`); saving is replaced by a demo message.
 - Run `npm run build` before pushing. Footer must keep the "family is fictional" notice; add "Photos are AI-generated" once AI photos are in.

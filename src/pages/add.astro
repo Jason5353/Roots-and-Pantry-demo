@@ -2,58 +2,388 @@
 import Layout from '../layouts/Layout.astro';
 import Snap from '../components/Snap.astro';
 import { family, pickSnapshots } from '../lib';
-const [a, b] = pickSnapshots('add-page', 2);
+const shots = pickSnapshots('add-page', 2);
+import { UNITS as units } from '../../importer/manual.js';
+// Demo: same form as the family site, but nothing is saved (no backend).
 ---
 <Layout title="Add a recipe">
   <main class="addpage">
     <div class="wrap">
       <div>
-        <h1>Add a recipe</h1>
-        <p class="lead">Paste a link to a recipe you've found, or type in one of your own. It goes straight into the family book.</p>
-        <div class="tabs" role="tablist">
-          <button type="button" role="tab" aria-selected="true" data-tab="link">From a link</button>
-          <button type="button" role="tab" aria-selected="false" data-tab="type">Type it in</button>
+        <h1 id="pagetitle">Share a recipe with the family</h1>
+        <p class="lead" id="pagelead">Paste a link to a recipe online, or type in one of your own.</p>
+        <div class="tabs" role="tablist" aria-label="How do you want to add it?">
+          <button type="button" role="tab" id="tab-link" aria-controls="panel-link" aria-selected="true">🔗 From a link</button>
+          <button type="button" role="tab" id="tab-type" aria-controls="panel-type" aria-selected="false" tabindex="-1">✏️ Type it in</button>
         </div>
-        <form id="linkform" data-panel="link">
-          <div class="field"><label for="url">Recipe link</label>
-            <div class="urlbox"><input id="url" type="url" placeholder="https://…" required /><button class="btn btn-red" type="submit">Save it</button></div></div>
-          <p class="hint">We read the recipe from the page, keep a credit and a link to the original, and save it in your family book only.</p>
-        </form>
-        <form id="typeform" data-panel="type" hidden>
-          <div class="field"><label for="t-title">Recipe name</label><input id="t-title" required placeholder="e.g. Grandad's chilli" /></div>
-          <div class="row2">
-            <div class="field"><label for="t-cat">Category</label><select id="t-cat">{family.categories.map((c) => <option>{c}</option>)}</select></div>
-            <div class="field"><label for="t-serves">Serves</label><input id="t-serves" type="number" min="1" value="4" required /></div>
+
+        <div id="panel-link" role="tabpanel" aria-labelledby="tab-link">
+        <p class="hint">We'll save the ingredients, method and photo, and credit the site it came from.</p>
+        <form id="addform" novalidate>
+          <div class="field">
+            <label for="url">Recipe link</label>
+            <div class="urlbox">
+              <input id="url" name="url" type="url" inputmode="url" placeholder="https://www.bbcgoodfood.com/recipes/…" required />
+              <button class="btn btn-red" id="addbtn" type="submit">Add recipe</button>
+            </div>
           </div>
-          <div class="field"><label for="t-ing">Ingredients <span class="opt">(one per line)</span></label><textarea id="t-ing" required placeholder="500 g beef mince&#10;2 tbsp honey&#10;1 onion"></textarea></div>
-          <div class="field"><label for="t-steps">Method <span class="opt">(one step per line)</span></label><textarea id="t-steps" required></textarea></div>
-          <div class="field"><label for="t-note">The story behind it <span class="opt">(optional)</span></label><input id="t-note" placeholder="Who taught you this?" /></div>
-          <button class="btn btn-red" type="submit">Save recipe</button>
+          <div class="row2">
+            <div class="field">
+              <label for="cat">Category</label>
+              <select id="cat" name="category">
+                <option value="">Let us pick</option>
+                {family.categories.map((c) => <option>{c}</option>)}
+              </select>
+            </div>
+            <div class="field" id="whofield" hidden>
+              <label for="who">Who's adding it?</label>
+              <select id="who" name="addedBy">
+                <option value="">Choose your name</option>
+                {family.people.map((p) => <option>{p.name}</option>)}
+              </select>
+            </div>
+            <div class="field" id="mefield" hidden>
+              <label for="me">Added by</label>
+              <input id="me" disabled />
+            </div>
+          </div>
+          <div class="field">
+            <label for="note">A note for the family (optional)</label>
+            <textarea id="note" name="note" maxlength="200" placeholder="Kids love this one. Double the sauce!"></textarea>
+          </div>
         </form>
         <div class="status" id="status" role="status" aria-live="polite"></div>
+
+        <div class="howto">
+          <div>
+            <h3>From an Android phone</h3>
+            <p>Add this site to your home screen once (browser menu, then "Add to Home screen"). After that, tap Share on any recipe and pick Roots &amp; Pantry.</p>
+          </div>
+          <div>
+            <h3>From an iPhone</h3>
+            <p>Install the "Add to Roots &amp; Pantry" shortcut once. After that, tap Share on any recipe and pick the shortcut. (Set-up guide comes with the real app.)</p>
+          </div>
+        </div>
+        </div>
+
+        <div id="panel-type" role="tabpanel" aria-labelledby="tab-type" hidden>
+          <p class="hint" id="typehint">Got a recipe from a book, a card or your head? Type it in here. The amounts change when you tap + or − on Serves, just like linked recipes.</p>
+          <form id="typeform" novalidate>
+            <div class="field">
+              <label for="t-title">Recipe name</label>
+              <input id="t-title" name="title" maxlength="120" placeholder="Sugar cookies" autocomplete="off" />
+            </div>
+            <div class="row2">
+              <div class="field">
+                <label for="t-cat">Category</label>
+                <select id="t-cat" name="category">{family.categories.map((c) => <option>{c}</option>)}</select>
+              </div>
+              <div class="field">
+                <label for="t-serves">Serves</label>
+                <input id="t-serves" name="serves" type="number" inputmode="numeric" min="1" max="200" value="4" required />
+              </div>
+            </div>
+            <div class="row2">
+              <div class="field">
+                <label for="t-prep">Prep time <span class="opt">(minutes)</span></label>
+                <input id="t-prep" name="prepMins" type="number" inputmode="numeric" min="1" max="1000" placeholder="20" />
+              </div>
+              <div class="field">
+                <label for="t-cook">Cooking time <span class="opt">(minutes)</span></label>
+                <input id="t-cook" name="cookMins" type="number" inputmode="numeric" min="1" max="1000" placeholder="10" />
+              </div>
+            </div>
+
+            <fieldset class="field ingfield">
+              <legend>Ingredients</legend>
+              <p class="tip">Amount, unit, then the ingredient. Leave the amount blank for things like "salt, to taste".</p>
+              <div class="inghead" aria-hidden="true"><span>Amount</span><span>Unit</span><span>Ingredient</span></div>
+              <div id="t-ings"></div>
+              <button type="button" class="btn btn-ghost addrow" id="t-addrow">+ Add ingredient</button>
+            </fieldset>
+            <template id="t-ingrow">
+              <div class="ingrow">
+                <input class="amt" inputmode="decimal" maxlength="12" placeholder="310" aria-label="Amount" autocomplete="off" />
+                <select class="unit" aria-label="Unit">
+                  {units.map((u) => <option value={u}>{u || '–'}</option>)}
+                </select>
+                <input class="item" maxlength="200" placeholder="plain flour" aria-label="Ingredient" autocomplete="off" />
+                <button type="button" class="rm" aria-label="Remove this ingredient">✕</button>
+              </div>
+            </template>
+            <div class="field">
+              <label for="t-steps">Steps</label>
+              <p class="tip">One step per line. We'll number them for you.</p>
+              <textarea id="t-steps" name="steps" rows="8" placeholder={"Preheat the oven to 175°C and line two baking sheets.\nWhisk the flour, baking powder and sugar together.\nMix in the eggs, vanilla and butter."}></textarea>
+            </div>
+
+            <div class="row2">
+              <div class="field">
+                <label for="t-from">Where's it from? <span class="opt">(optional)</span></label>
+                <input id="t-from" name="from" maxlength="80" placeholder="Nan's recipe book" />
+              </div>
+              <div class="field" id="whofield2" hidden>
+                <label for="who2" id="who2label">Who's adding it?</label>
+                <select id="who2">
+                  <option value="">Choose your name</option>
+                  {family.people.map((p) => <option>{p.name}</option>)}
+                </select>
+              </div>
+              <div class="field" id="mefield2" hidden>
+                <label for="me2" id="me2label">Added by</label>
+                <input id="me2" disabled />
+              </div>
+            </div>
+            <div class="field">
+              <label for="t-note">A note for the family <span class="opt">(optional)</span></label>
+              <textarea id="t-note" name="note" maxlength="200" placeholder="Kids love these. Double the spice!"></textarea>
+            </div>
+            <div class="field">
+              <label for="t-photo" id="t-photo-label">Photo <span class="opt">(optional)</span></label>
+              <div class="photobox">
+                <input id="t-photo" type="file" accept="image/*" />
+                <img id="t-photo-preview" alt="" hidden />
+                <button type="button" class="btn btn-ghost" id="t-photo-clear" hidden>Remove photo</button>
+              </div>
+            </div>
+
+            <div class="livepreview" id="t-preview" aria-live="polite" hidden>
+              <h2>Preview</h2>
+              <div id="t-preview-body"></div>
+            </div>
+
+            <div class="savebar">
+              <button class="btn btn-red" id="savebtn" type="submit">Save recipe</button>
+              <a class="btn btn-ghost" id="cancelbtn" href="/" hidden>Cancel</a>
+            </div>
+          </form>
+          <div class="status" id="status2" role="status" aria-live="polite"></div>
+        </div>
       </div>
-      <div class="addside"><Snap s={a} /><Snap s={b} /></div>
+      <div class="addside" aria-hidden="true">{shots.map((s) => <Snap s={s} />)}</div>
     </div>
   </main>
 </Layout>
+
 <script>
-  import { dealFor, esc } from '../scripts/store';
-  const tabs = document.querySelectorAll<HTMLButtonElement>('[data-tab]');
-  tabs.forEach((t) => t.addEventListener('click', () => {
-    tabs.forEach((x) => x.setAttribute('aria-selected', String(x === t)));
-    document.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => (p.hidden = p.dataset.panel !== t.dataset.tab));
-  }));
-  const status = document.getElementById('status')!;
-  const say = (html: string) => { status.className = 'status ok'; status.innerHTML = html; };
-  document.getElementById('linkform')!.addEventListener('submit', (e) => {
-    e.preventDefault();
-    say('<strong>Demo only.</strong> In the real app the recipe would be read from that page and appear in your family book within a minute, with a credit and a link to the original. Local deals are matched to its ingredients automatically.');
+  import { AMOUNT, splitIngredient } from '../../importer/manual.js';
+  import { me, dealFor } from '../scripts/store';
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const form = $<HTMLFormElement>('addform');
+  const url = $<HTMLInputElement>('url');
+  const btn = $<HTMLButtonElement>('addbtn');
+  const status = $<HTMLDivElement>('status');
+  const who = $<HTMLSelectElement>('who');
+  let identity: string | null = null;
+
+  const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
+  const show = (kind: 'ok' | 'err', html: string) => { status.className = `status ${kind}`; status.innerHTML = html; };
+
+  // Shared from another app: the link can arrive in url, text or title.
+  const p = new URLSearchParams(location.search);
+  const shared = [p.get('url'), p.get('text'), p.get('title')].filter(Boolean).join(' ');
+  const found = shared.match(/https?:\/\/[^\s"'<>]+/);
+  if (found) url.value = found[0];
+
+  const who2 = $<HTMLSelectElement>('who2');
+  try { who.value = who2.value = localStorage.getItem('lfr-name') ?? ''; } catch {}
+
+  async function whoami() {
+    identity = me().name; // demo: whoever is picked with the avatar button
+    document.addEventListener('demo:change', () => { identity = me().name; $<HTMLInputElement>('me').value = identity; $<HTMLInputElement>('me2').value = identity; });
+    if (identity) {
+      $('mefield').hidden = false; $<HTMLInputElement>('me').value = identity;
+      $('mefield2').hidden = false; $<HTMLInputElement>('me2').value = identity;
+    } else { $('whofield').hidden = false; $('whofield2').hidden = false; }
+  }
+
+  async function submit() {
+    const link = url.value.trim();
+    if (!/^https?:\/\//i.test(link)) { show('err', '<strong>That doesn\'t look like a link.</strong> Paste the full web address, starting with https://'); url.focus(); return; }
+    const addedBy = identity ?? who.value;
+    if (!addedBy) { show('err', '<strong>Choose your name first,</strong> so everyone knows who added it.'); who.focus(); return; }
+    try { if (!identity) localStorage.setItem('lfr-name', addedBy); } catch {}
+    btn.disabled = true; btn.textContent = 'Adding…';
+    show('ok', 'Fetching the recipe…');
+    setTimeout(() => {
+      // Demo: no importer here. In the real app the recipe is read from the page and saved for the family.
+      let site = link; try { site = new URL(link).hostname.replace(/^www\./, ''); } catch {}
+      show('ok', `<strong>Demo only – nothing has been saved.</strong> In the real app the recipe from <b>${esc(site)}</b> would now be in the family book (in about a minute), added by ${esc(addedBy)}, with a credit and a link to the original. Local deals are matched to its ingredients automatically.`);
+      btn.disabled = false; btn.textContent = 'Add recipe';
+    }, 900);
+  }
+
+  form.addEventListener('submit', (e) => { e.preventDefault(); submit(); });
+
+  // ---------- Tabs: "From a link" / "Type it in" ----------
+  const tabs = [$<HTMLButtonElement>('tab-link'), $<HTMLButtonElement>('tab-type')];
+  function pick(which: 'link' | 'type', focus = false) {
+    for (const t of tabs) {
+      const on = t.id === `tab-${which}`;
+      t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1;
+      $(t.getAttribute('aria-controls')!).hidden = !on;
+      if (on && focus) t.focus();
+    }
+    const u = new URL(location.href);
+    if (which === 'type') u.searchParams.set('mode', 'type'); else u.searchParams.delete('mode');
+    history.replaceState(null, '', u.pathname + u.search);
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => pick(i ? 'type' : 'link'));
+    t.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') pick(i ? 'link' : 'type', true); });
   });
-  document.getElementById('typeform')!.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const lines = (document.getElementById('t-ing') as HTMLTextAreaElement).value.split('\n').map((x) => x.trim()).filter(Boolean);
-    const hits = [...new Set(lines.map((l) => dealFor(l)?.name).filter(Boolean))];
-    say(`<strong>Demo only.</strong> In the real app “${esc((document.getElementById('t-title') as HTMLInputElement).value)}” would now be saved for the whole family.` +
-      (hits.length ? `<br>🏷️ Local deals found for your ingredients: ${hits.map((h) => esc(h!)).join(', ')}.` : ''));
+  if (p.get('mode') === 'type' && !found) pick('type');
+
+  // ---------- Type it in ----------
+  const tform = $<HTMLFormElement>('typeform');
+  const tstatus = $<HTMLDivElement>('status2');
+  const save = $<HTMLButtonElement>('savebtn');
+  const ingBox = $('t-ings');
+  const rowTpl = $<HTMLTemplateElement>('t-ingrow');
+  function addRow(focus = false) {
+    const row = rowTpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
+    row.querySelector<HTMLButtonElement>('.rm')!.addEventListener('click', () => {
+      if (ingBox.children.length > 1) row.remove(); else row.querySelectorAll('input').forEach((i) => (i.value = ''));
+      preview();
+    });
+    // Enter in the ingredient box adds the next row, which is quicker on a phone.
+    row.querySelector<HTMLInputElement>('.item')!.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); if (row === ingBox.lastElementChild) addRow(true); else (row.nextElementSibling?.querySelector('.amt') as HTMLInputElement)?.focus(); }
+    });
+    ingBox.append(row);
+    if (focus) row.querySelector<HTMLInputElement>('.amt')!.focus();
+  }
+  const rows = () => [...ingBox.querySelectorAll<HTMLElement>('.ingrow')].map((r) => ({
+    el: r,
+    amount: r.querySelector<HTMLInputElement>('.amt')!.value.trim(),
+    unit: r.querySelector<HTMLSelectElement>('.unit')!.value,
+    item: r.querySelector<HTMLInputElement>('.item')!.value.replace(/\s+/g, ' ').trim(),
+  })).filter((x) => x.amount || x.item);
+  const ingLine = (x: { amount: string; unit: string; item: string }) => [x.amount, x.unit, x.item].filter(Boolean).join(' ');
+  for (let i = 0; i < 3; i++) addRow();
+  $('t-addrow').addEventListener('click', () => addRow(true));
+  const steps = $<HTMLTextAreaElement>('t-steps');
+  const val = (id: string) => $<HTMLInputElement>(id).value.trim();
+  const show2 = (kind: 'ok' | 'err', html: string) => { tstatus.className = `status ${kind}`; tstatus.innerHTML = html; };
+  const lines = (t: string, numbered = false) => t.split(/\r?\n/).map((l) => l.replace(/\s+/g, ' ').trim())
+    .map((l) => l.replace(/^[-–•*·▢☐□]\s+/, ''))
+    .map((l) => (numbered ? l.replace(/^(?:step\s*)?\d{1,2}\s*[.):-]\s*/i, '') : l))
+    .filter((l) => l && l !== '#');
+
+  // Live preview, so you can see exactly how it'll look before saving.
+  function preview() {
+    const i = rows().map(ingLine), s = lines(steps.value, true), title = val('t-title');
+    const box = $('t-preview');
+    box.hidden = !(i.length || s.length || title);
+    if (box.hidden) return;
+    const li = (x: string) => x.startsWith('#') ? `<li class="head">${esc(x.replace(/^#\s*/, ''))}</li>` : `<li>${esc(x)}</li>`;
+    const serves = val('t-serves');
+    let n = 0;
+    $('t-preview-body').innerHTML = `
+      <h3>${esc(title || 'Untitled recipe')}</h3>
+      <div class="pv"><div><h4>Ingredients${serves ? ` (serves ${esc(serves)})` : ''}</h4><ul>${i.map(li).join('') || '<li class="empty">None yet</li>'}</ul></div>
+      <div><h4>Method (${s.filter((x) => !x.startsWith('#')).length} steps)</h4><ol>${s.map((x) => x.startsWith('#') ? li(x) : `<li><b>${++n}.</b> ${esc(x)}</li>`).join('') || '<li class="empty">None yet</li>'}</ol></div></div>`;
+  }
+  tform.addEventListener('input', preview);
+
+  // Photo: shrunk in the browser (max 1600px JPEG). Redrawing it also strips location data.
+  let photo = '';
+  const pin = $<HTMLInputElement>('t-photo'), pimg = $<HTMLImageElement>('t-photo-preview'), pclear = $<HTMLButtonElement>('t-photo-clear');
+  let currentPhoto = ''; // edit mode: the recipe's existing photo, kept unless a new one is chosen
+  function clearPhoto() {
+    photo = ''; pin.value = ''; pclear.hidden = true;
+    if (currentPhoto) { pimg.src = currentPhoto; pimg.hidden = false; } else { pimg.hidden = true; pimg.removeAttribute('src'); }
+  }
+  pin.addEventListener('change', async () => {
+    const f = pin.files?.[0];
+    if (!f) return clearPhoto();
+    try {
+      const bmp = await createImageBitmap(f);
+      const scale = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
+      const c = document.createElement('canvas');
+      c.width = Math.round(bmp.width * scale); c.height = Math.round(bmp.height * scale);
+      c.getContext('2d')!.drawImage(bmp, 0, 0, c.width, c.height);
+      photo = c.toDataURL('image/jpeg', 0.85);
+      pimg.src = photo; pimg.hidden = pclear.hidden = false;
+    } catch { clearPhoto(); show2('err', "<strong>Couldn't read that photo.</strong> Try a different one."); }
   });
+  pclear.addEventListener('click', clearPhoto);
+
+  async function saveTyped() {
+    const title = val('t-title');
+    if (!title) { show2('err', '<strong>Give the recipe a name.</strong>'); $('t-title').focus(); return; }
+    const serves = val('t-serves');
+    if (!/^\d+$/.test(serves) || +serves < 1) { show2('err', '<strong>Say how many it serves,</strong> so the amounts can be scaled.'); $('t-serves').focus(); return; }
+    const ings = rows();
+    if (!ings.length) { show2('err', '<strong>Add at least one ingredient.</strong>'); ingBox.querySelector<HTMLInputElement>('.amt')?.focus(); return; }
+    const noItem = ings.find((x) => !x.item);
+    if (noItem) { show2('err', '<strong>One of the ingredients has an amount but no name.</strong>'); noItem.el.querySelector<HTMLInputElement>('.item')!.focus(); return; }
+    const badAmt = ings.find((x) => x.amount && !AMOUNT.test(x.amount));
+    if (badAmt) { show2('err', `<strong>"${esc(badAmt.amount)}" isn't an amount we can scale.</strong> Use a number like 2, 1.5, 1¾ or 1 3/4.`); badAmt.el.querySelector<HTMLInputElement>('.amt')!.focus(); return; }
+    const noAmtUnit = ings.find((x) => !x.amount && x.unit);
+    if (noAmtUnit) { show2('err', '<strong>An ingredient has a unit but no amount.</strong> Add the amount, or set the unit to –.'); noAmtUnit.el.querySelector<HTMLInputElement>('.amt')!.focus(); return; }
+    if (!lines(steps.value).some((x) => !x.startsWith('#'))) { show2('err', '<strong>Add at least one step,</strong> one per line.'); steps.focus(); return; }
+    const addedBy = identity ?? who2.value;
+    if (!addedBy) { show2('err', `<strong>Choose your name first,</strong> so everyone knows who ${editId ? 'changed' : 'added'} it.`); who2.focus(); return; }
+    try { if (!identity) localStorage.setItem('lfr-name', addedBy); } catch {}
+    // Demo: nothing is saved. Show what would happen, including any local deals for the ingredients.
+    const deals = [...new Map(ings.map((x) => dealFor(ingLine(x))).filter(Boolean).map((p) => [p!.id, p!])).values()];
+    show2('ok', `<strong>Demo only – nothing has been saved.</strong> In the real app ${editId ? 'your changes to' : ''} “${esc(title)}” would now be ${editId ? 'saved' : 'in the family book'} for everyone, ${editId ? 'changed' : 'added'} by ${esc(addedBy)}.` +
+      (deals.length ? `<br>🏷️ Local deals for your ingredients: ${deals.map((p) => `<b>${esc(p.name)}</b> (${esc(p.offer)})`).join(', ')}.` : ''));
+  }
+  tform.addEventListener('submit', (e) => { e.preventDefault(); saveTyped(); });
+
+  // ---------- Edit mode: /add/?edit=<id> opens the "Type it in" form filled with a saved recipe ----------
+  const editId = p.get('edit') && /^[a-z0-9][a-z0-9-]{0,120}$/.test(p.get('edit')!) ? p.get('edit')! : '';
+  async function startEdit() {
+    document.title = 'Edit recipe · Roots & Pantry demo';
+    $('pagetitle').textContent = 'Edit recipe';
+    $('pagelead').textContent = 'Change anything below, then save. It updates for everyone in about a minute.';
+    document.querySelector<HTMLElement>('.tabs')!.hidden = true;
+    $('panel-link').hidden = true; $('panel-type').hidden = false;
+    $('typehint').hidden = true;
+    $('who2label').textContent = "Who's changing it?"; $('me2label').textContent = 'Changed by';
+    $('t-photo-label').innerHTML = 'Photo <span class="opt">(choose one to replace it)</span>';
+    save.textContent = 'Save changes';
+    pclear.textContent = 'Keep the old photo';
+    const cancel = $<HTMLAnchorElement>('cancelbtn'); cancel.href = `/recipes/${editId}/`; cancel.hidden = false;
+    tform.hidden = true;
+    show2('ok', 'Loading the recipe…');
+    let d: any;
+    try {
+      const r = await fetch(`/recipes/${editId}.json`, { credentials: 'same-origin', cache: 'no-store' });
+      if (!r.ok) throw new Error();
+      d = await r.json();
+    } catch {
+      show2('err', "<strong>Couldn't load that recipe.</strong> If it was only just added or changed, give it a minute and try again. <a href=\"/\">All recipes</a>");
+      return;
+    }
+    $('pagetitle').textContent = `Edit: ${d.title}`;
+    $<HTMLInputElement>('t-title').value = d.title ?? '';
+    const cat = $<HTMLSelectElement>('t-cat');
+    if (d.category && ![...cat.options].some((o) => o.value === d.category)) cat.add(new Option(d.category));
+    cat.value = d.category ?? cat.value;
+    const fromYield = parseInt(String(d.yieldText ?? '').match(/\d+/)?.[0] ?? '', 10);
+    $<HTMLInputElement>('t-serves').value = d.serves ? String(d.serves) : fromYield > 0 ? String(fromYield) : '';
+    $<HTMLInputElement>('t-prep').value = d.prepMins ? String(d.prepMins) : '';
+    $<HTMLInputElement>('t-cook').value = d.cookMins ? String(d.cookMins) : '';
+    ingBox.innerHTML = '';
+    for (const line of d.ingredients ?? []) {
+      addRow();
+      const row = ingBox.lastElementChild as HTMLElement, s = splitIngredient(line);
+      row.querySelector<HTMLInputElement>('.amt')!.value = s.amount;
+      row.querySelector<HTMLSelectElement>('.unit')!.value = s.unit;
+      row.querySelector<HTMLInputElement>('.item')!.value = s.item;
+    }
+    if (!ingBox.children.length) addRow();
+    steps.value = (d.steps ?? []).join('\n');
+    $<HTMLInputElement>('t-from').value = d.source?.name && d.source.name !== 'Hartley family recipe' ? d.source.name : '';
+    $<HTMLTextAreaElement>('t-note').value = d.note ?? '';
+    if (d.image) { currentPhoto = d.image; clearPhoto(); }
+    tform.hidden = false;
+    tstatus.className = 'status'; tstatus.innerHTML = '';
+    preview();
+  }
+  if (editId) startEdit();
+  whoami().then(() => { if (found && (identity || who.value)) submit(); });
 </script>
