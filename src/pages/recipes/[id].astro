@@ -5,6 +5,7 @@ import Avatar from '../../components/Avatar.astro';
 import Snap from '../../components/Snap.astro';
 import RecipeCard from '../../components/RecipeCard.astro';
 import SnapshotStrip from '../../components/SnapshotStrip.astro';
+import SnapDeck from '../../components/SnapDeck.astro';
 import DealTag from '../../components/DealTag.astro';
 import { mins, pickSnapshots } from '../../lib';
 import { dealFor } from '../../data/producers.js';
@@ -106,7 +107,8 @@ const facts = [
       </section>
     )}
   </main>
-  <SnapshotStrip seed={`strip-${r.id}`} count={5} />
+  <SnapDeck />
+  <SnapshotStrip seed={`strip-${r.id}`} count={12} rolling />
 
   <dialog class="confirm" id="deldlg" data-id={r.id} aria-labelledby="deltitle">
     <form method="dialog">
