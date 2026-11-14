@@ -12,6 +12,7 @@ Owner: Jason (GitHub `Jason5353`). Separate from the private Lewis family site a
 - Sponsored spotlight is shelved (13 Nov 2026) until the concept is proven: `src/components/Spotlight.astro` + `spotlight` lines in producers.js are kept but not used on any page.
 - Under-13 accounts: `body[data-age=child]` hides everything with class `deal-only`. Non-admins: `.admin-only` is disabled.
 - Photos: AI-generated (24 in so far; 7 snapshots still SVG placeholders). Strips/collage use only real photos once ≥8 exist (`pool` in lib.ts); food photos double as snapshots. Polaroids keep each photo's own shape (w/h in snapshots.json → inline aspect-ratio); fixed-size spots (collage) still crop. `tools/add-photos.py <zip>` converts to WebP, strips EXIF, rewrites references.
+- Lightbox (`src/scripts/lightbox.ts`): click any `.snap` or recipe `.rhead .big` photo to zoom it to centre with the page dimmed; any click/Esc/scroll returns it.
 - Hosted on Cloudflare Pages (Git-connected, branch `main`, public, noindex). Push to `main` deploys in ~1 minute.
 - Add/Edit page (`src/pages/add.astro`) is the family site's form (with `importer/manual.js` and `/recipes/<id>.json`); saving is replaced by a demo message.
 - Run `npm run build` before pushing. Footer must keep the "Photos are AI-generated and the family is fictional" notice.

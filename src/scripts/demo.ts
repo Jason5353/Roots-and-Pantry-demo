@@ -1,5 +1,6 @@
 // Runs on every page: who's signed in, favourites, shopping-list count, deal pop-ups, codes and taps.
 import { load, update, save, me, allPeople, producers, tap, avatarHTML, dealCardHTML, toast, esc } from './store';
+import './lightbox';
 
 const $ = <T extends HTMLElement = HTMLElement>(s: string) => document.querySelector<T>(s);
 const $$ = <T extends HTMLElement = HTMLElement>(s: string) => [...document.querySelectorAll<T>(s)];
