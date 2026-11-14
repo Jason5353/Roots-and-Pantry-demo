@@ -16,7 +16,7 @@ const photos = pool.map(({ file, caption, alt, w, h }) => ({ file, caption, alt,
       // Put a photo into an existing <figure class="snap">.
       fill(fig, s) {
         const img = fig.querySelector('img'), cap = fig.querySelector('figcaption');
-        img.src = s.file; img.alt = s.alt; img.width = s.w; img.height = s.h;
+        img.src = s.file; img.alt = s.alt; img.width = s.w; img.height = s.h; img.style.aspectRatio = `${s.w}/${s.h}`;
         cap.textContent = s.caption;
       },
       calm: matchMedia('(prefers-reduced-motion: reduce)').matches,

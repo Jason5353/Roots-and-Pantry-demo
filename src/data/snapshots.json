@@ -14,18 +14,18 @@
     "h": 896
   },
   {
-    "file": "/photos/lilys-birthday.svg",
+    "file": "/photos/lilys-birthday.webp",
     "caption": "Lily's 8th!",
     "alt": "Lily blowing out her birthday candles",
-    "w": 960,
-    "h": 1200
+    "w": 800,
+    "h": 1000
   },
   {
-    "file": "/photos/sunday-roast.svg",
+    "file": "/photos/sunday-roast.webp",
     "caption": "Sunday roast",
     "alt": "The family round the table for Sunday roast",
     "w": 1200,
-    "h": 900
+    "h": 670
   },
   {
     "file": "/photos/priya-curry-night.webp",
@@ -42,25 +42,25 @@
     "h": 864
   },
   {
-    "file": "/photos/sams-midnight-toastie.svg",
+    "file": "/photos/sams-midnight-toastie.webp",
     "caption": "Midnight toastie",
     "alt": "Sam making a late-night toastie",
     "w": 1200,
-    "h": 900
+    "h": 896
   },
   {
-    "file": "/photos/pancake-day.svg",
+    "file": "/photos/pancake-day.webp",
     "caption": "Pancake Day flip",
     "alt": "Dave flipping a pancake while Lily laughs",
-    "w": 960,
-    "h": 1200
+    "w": 1200,
+    "h": 670
   },
   {
-    "file": "/photos/christmas-eve-ham.svg",
+    "file": "/photos/christmas-eve-ham.webp",
     "caption": "Christmas Eve",
     "alt": "Glazing the Christmas ham",
     "w": 1200,
-    "h": 900
+    "h": 896
   },
   {
     "file": "/photos/gingerbread-day.svg",

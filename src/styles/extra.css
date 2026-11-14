@@ -179,6 +179,8 @@ dialog.pop .actions { display: flex; gap: 10px; justify-content: flex-end; flex-
 .tip-qr figcaption { font-size: 14px; color: var(--ink-soft); margin-top: 8px }
 @media (max-width: 980px) { .tip { grid-template-columns: 1fr } .tip-qr img { margin: 0 auto } }
 
+.strip { align-items: center }
+
 /* under-13 accounts: no deals, no adverts; grown-ups do deleting and inviting */
 body[data-age="child"] .deal-only { display: none !important }
 body[data-age="child"] .childnote { display: block }

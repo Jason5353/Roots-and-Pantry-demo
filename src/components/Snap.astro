@@ -2,8 +2,9 @@
 import type { Snapshot } from '../lib';
 interface Props { s: Snapshot; class?: string; eager?: boolean }
 const { s, class: cls = '', eager = false } = Astro.props;
+// Each photo keeps its own shape (wide, 4:3 or tall). Fixed-size spots like the collage still crop.
 ---
 <figure class={`snap ${cls}`}>
-  <img src={s.file} alt={s.alt} width={s.w} height={s.h} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+  <img src={s.file} alt={s.alt} width={s.w} height={s.h} style={`aspect-ratio:${s.w}/${s.h}`} loading={eager ? 'eager' : 'lazy'} decoding="async" />
   <figcaption>{s.caption}</figcaption>
 </figure>
