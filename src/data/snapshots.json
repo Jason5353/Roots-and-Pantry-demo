@@ -180,5 +180,19 @@
     "alt": "Victoria sponge with jam and cream",
     "w": 1600,
     "h": 1200
+  },
+  {
+    "file": "/photos/breakfast-sundaes.svg",
+    "caption": "Sundae Sunday!",
+    "alt": "Lily layering breakfast sundaes with Priya and Nana Mags",
+    "w": 1200,
+    "h": 900
+  },
+  {
+    "file": "/photos/pitta-pizza-faces.svg",
+    "caption": "Pizza faces",
+    "alt": "Lily and Sam making smiley pitta bread pizzas",
+    "w": 1200,
+    "h": 900
   }
 ]
