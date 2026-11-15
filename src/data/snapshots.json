@@ -182,17 +182,17 @@
     "h": 1200
   },
   {
-    "file": "/photos/breakfast-sundaes.svg",
+    "file": "/photos/breakfast-sundaes.webp",
     "caption": "Sundae Sunday!",
     "alt": "Lily layering breakfast sundaes with Priya and Nana Mags",
-    "w": 1200,
-    "h": 900
+    "w": 1194,
+    "h": 896
   },
   {
-    "file": "/photos/pitta-pizza-faces.svg",
+    "file": "/photos/pitta-pizza-faces.webp",
     "caption": "Pizza faces",
     "alt": "Lily and Sam making smiley pitta bread pizzas",
-    "w": 1200,
-    "h": 900
+    "w": 1194,
+    "h": 896
   }
 ]

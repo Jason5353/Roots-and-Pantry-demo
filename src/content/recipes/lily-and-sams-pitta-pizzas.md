@@ -1,7 +1,7 @@
 ---
 title: "Lily & Sam's Smiley Pitta Pizzas"
 description: "Sam does the oven. I do the faces."
-image: "/recipe-images/lily-and-sams-pitta-pizzas.svg"
+image: "/recipe-images/lily-and-sams-pitta-pizzas.webp"
 source:
   name: "Eats Amazing (Grace Hall)"
   url: "https://www.eatsamazing.co.uk/family-friendly-recipes/easy-recipes-for-kids/easy-pitta-bread-pizza-recipe"

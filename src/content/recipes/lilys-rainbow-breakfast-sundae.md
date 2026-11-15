@@ -1,7 +1,7 @@
 ---
 title: "Lily's Rainbow Breakfast Sundae"
 description: "Breakfast that looks like pudding! I made these with Mum and Nana."
-image: "/recipe-images/lilys-rainbow-breakfast-sundae.svg"
+image: "/recipe-images/lilys-rainbow-breakfast-sundae.webp"
 source:
   name: "Eats Amazing (Grace Hall)"
   url: "https://www.eatsamazing.co.uk/family-friendly-recipes/healthy-breakfast-ideas-recipes/diy-breakfast-sundae-recipe-funfoodfriday"
