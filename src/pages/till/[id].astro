@@ -1,0 +1,30 @@
+---
+// "Show at the till" screen: a big code for in-person deals (shops, market stalls). Works offline once loaded.
+import Layout from '../../layouts/Layout.astro';
+import { producers } from '../../data/producers.js';
+export function getStaticPaths() { return producers.map((p) => ({ params: { id: p.id }, props: { p } })); }
+const { p } = Astro.props;
+---
+<Layout title={`Show at the till · ${p.name}`} active="deals">
+  <main>
+    <section class="wrap till">
+      <div class="childnote">🌈 Deals are switched off for child accounts. Ask a grown-up!</div>
+      <div class="deal deal-only tillcard" data-till={p.id}>
+        <div class="top">
+          <span class="logo2" style={`background:${p.colour}`}>{p.icon}</span>
+          <div><h3>{p.name}</h3><div class="where">{p.where}</div></div>
+        </div>
+        <p class="tillsay">Show this at the till</p>
+        <div class="offer">{p.offer}</div>
+        <div class="bigcode" aria-label={`Code ${p.code.split('').join(' ')}`}>{p.code}</div>
+        <p class="tillwho">Roots &amp; Pantry family · <span data-who-full>Dave Hartley</span><br />Valid until 31 December</p>
+      </div>
+      <p class="tillback deal-only"><a href="/deals/">← Back to local deals</a></p>
+    </section>
+  </main>
+</Layout>
+<script>
+  import { tap } from '../../scripts/store';
+  const id = document.querySelector<HTMLElement>('[data-till]')?.dataset.till;
+  if (id) tap(id, 1);
+</script>

@@ -92,7 +92,7 @@ export function dealTagHTML(p: Producer | null) {
 export function dealCardHTML(p: Producer, uses = '') {
   return `<div class="deal deal-only"><div class="top"><span class="logo2" style="background:${p.colour}">${p.icon}</span><div><h3>${esc(p.name)}</h3><div class="where">${esc(p.where)}</div></div></div>
   <div class="offer">${esc(p.offer)}</div>
-  <div class="codebox"><span class="code">${esc(p.code)}</span><button type="button" class="btn btn-ghost sm" data-copy="${p.id}">Copy</button><button type="button" class="btn btn-green sm" data-shop="${p.id}">Shop now ↗</button></div>
+  <div class="codebox"><span class="code">${esc(p.code)}</span><button type="button" class="btn btn-ghost sm" data-copy="${p.id}">Copy</button><a class="btn btn-ghost sm" href="/till/${p.id}/">Show at till</a><button type="button" class="btn btn-green sm" data-shop="${p.id}">Shop now ↗</button></div>
   ${uses ? `<div class="uses">${uses}</div>` : ''}</div>`;
 }
 export function toast(msg: string) {

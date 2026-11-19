@@ -227,3 +227,13 @@ body:not([data-role="admin"]) .admin-only { opacity: .45; pointer-events: none }
   .deals-wrap h2 { font-size: 32px }
 }
 @media print { .banner, .tabbar, .dealtag, .heart { display: none !important } }
+
+/* Show-at-till screen (/till/<producer>/) */
+.till { padding: 22px 18px 40px; max-width: 560px }
+.tillcard { text-align: center; padding: 26px 20px }
+.tillcard .top { justify-content: center; text-align: left }
+.tillcard .tillsay { margin: 14px 0 0; font-weight: 600; color: var(--ink-soft) }
+.tillcard .offer { font-size: 34px }
+.tillcard .bigcode { margin: 12px 0 4px; padding: 22px 10px; border: 3px dashed var(--basil); border-radius: 18px; font: 800 clamp(30px, 11vw, 46px)/1 var(--display); letter-spacing: .06em; color: var(--basil); overflow-wrap: anywhere }
+.tillcard .tillwho { margin: 10px 0 0; font-size: 15px; color: var(--ink-soft) }
+.tillback { margin-top: 18px; text-align: center }

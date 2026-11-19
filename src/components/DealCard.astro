@@ -12,6 +12,7 @@ const { p, uses = [] } = Astro.props;
   <div class="codebox">
     <span class="code">{p.code}</span>
     <button type="button" class="btn btn-ghost sm" data-copy={p.id}>Copy</button>
+    <a class="btn btn-ghost sm" href={`/till/${p.id}/`}>Show at till</a>
     <button type="button" class="btn btn-green sm" data-shop={p.id}>Shop now ↗</button>
   </div>
   {uses.length > 0 && <div class="uses">In your recipes: {uses.join(', ')}</div>}

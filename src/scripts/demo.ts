@@ -12,6 +12,9 @@ function applyAll() {
   document.body.dataset.role = u.role;
   const av = $('#whoav'); if (av) av.innerHTML = avatarHTML(u, s);
   const nm = $('#whoname'); if (nm) nm.textContent = u.name;
+  // Full name on the show-at-till screen, e.g. "Dave Hartley".
+  const surname = (s.familyName ?? 'Hartley Family').replace(/\s*family$/i, '');
+  $$('[data-who-full]').forEach((el) => (el.textContent = `${u.name} ${surname}`.trim()));
   // Family name + colour chosen on the Family page.
   if (s.familyName) $$('[data-family-name]').forEach((el) => (el.textContent = s.familyName!));
   if (s.colour) document.documentElement.style.setProperty('--pepper', s.colour);

@@ -6,6 +6,7 @@ Owner: Jason (GitHub `Jason5353`). Separate from the private Lewis family site a
 - Astro 7 static site, design copied from `Jason5353/lewis-family-recipes` (`src/styles/global.css` unchanged; additions in `src/styles/extra.css`).
 - All content fictional: Hartley family (`src/data/family.js`), producers + codes (`src/data/producers.js`), recipes (`src/content/recipes/*.md`), snapshots (`src/data/snapshots.json`).
 - No backend. Demo state (who's signed in, favourites, shopping list, taps, family settings) is in localStorage via `src/scripts/store.ts`; `src/scripts/demo.ts` runs on every page.
+- Show-at-till screen `/till/<producer>/` (`src/pages/till/[id].astro`, one static page per producer): big code + offer + "Roots & Pantry family · <name> <surname>" (`data-who-full`, filled by demo.ts), "Show at till" button on every deal card (DealCard.astro + `dealCardHTML`). Offers match the explainer video on rootsandpantry.co.uk/how-it-works/ (Hollybrook "10% off cheese & dairy" HOLLY10, Oakmere "10% off in the shop" OAKMERE10) – keep them in step if the video is remade.
 - Deal matching: producer `kw` words matched as whole words against ingredient lines (`dealFor` in producers.js and store.ts – keep the two in step).
 - Free for families and producers for now. Producers can leave a voluntary one-off £5 thank-you (Revolut link + `public/tip-qr.svg`, generated from the link; producers page `#tip`).
 - Producer contact (producers page): Jason Lewis, admin@bmscyberdefence.co.uk, 07821 453 905.
